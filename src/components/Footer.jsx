@@ -1,9 +1,21 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, Github, Instagram, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [isTablet, setIsTablet] = useState(window.innerWidth < 768);
+  
+  // Handle responsive layout
+  useEffect(() => {
+    const handleResize = () => {
+      setIsTablet(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const footerStyles = {
     background: 'var(--gray-50)',
@@ -18,11 +30,12 @@ const Footer = () => {
 
   const gridStyles = {
     display: 'grid',
-    gridTemplateColumns: '1fr',
-    gap: '2.5rem',
-    '@media (min-width: 768px)': {
-      gridTemplateColumns: 'repeat(4, 1fr)'
-    }
+    gridTemplateColumns: isTablet ? '1fr' : 'repeat(4, 1fr)',
+    gap: '2.5rem'
+  };
+
+  const logoColumnStyles = {
+    gridColumn: isTablet ? 'auto' : 'span 2'
   };
 
   const logoStyles = {
@@ -44,10 +57,7 @@ const Footer = () => {
 
   const socialButtonStyles = {
     borderRadius: '9999px',
-    color: 'var(--gray-600)',
-    ':hover': {
-      color: 'var(--primary)'
-    }
+    color: 'var(--gray-600)'
   };
 
   const sectionTitleStyles = {
@@ -58,10 +68,29 @@ const Footer = () => {
 
   const linkStyles = {
     color: 'var(--gray-600)',
-    ':hover': {
-      color: 'var(--primary)',
-      transition: 'colors 0.2s ease'
-    }
+    textDecoration: 'none'
+  };
+
+  const footerBottomStyles = {
+    borderTop: '1px solid var(--gray-200)',
+    marginTop: '3rem',
+    paddingTop: '2rem',
+    display: 'flex',
+    flexDirection: isTablet ? 'column' : 'row',
+    justifyContent: isTablet ? 'center' : 'space-between',
+    alignItems: 'center',
+    gap: '1rem'
+  };
+
+  const copyrightStyles = {
+    color: 'var(--gray-500)',
+    fontSize: '0.875rem',
+    marginBottom: isTablet ? '1rem' : 0
+  };
+
+  const creditStyles = {
+    color: 'var(--gray-500)',
+    fontSize: '0.875rem'
   };
 
   const quickLinks = [
@@ -84,7 +113,7 @@ const Footer = () => {
       <div style={containerStyles}>
         <div style={gridStyles}>
           {/* Logo and Description */}
-          <div style={{ gridColumn: '1 / -1', '@media (min-width: 768px)': { gridColumn: 'span 2' } }}>
+          <div style={logoColumnStyles}>
             <Link to="/" style={logoStyles}>
               <span style={{ height: '0.75rem', width: '0.75rem', background: 'var(--primary)', borderRadius: '9999px' }}></span>
               <span>PillPal</span>
@@ -93,15 +122,24 @@ const Footer = () => {
               Your personal medication assistant. Simplifying medication management to help you stay healthy.
             </p>
             <div style={{ display: 'flex', gap: '1rem' }}>
-              {[Twitter, Instagram, Github].map((Icon, index) => (
-                <Button 
-                  key={index}
-                  variant="ghost" 
-                  style={socialButtonStyles}
-                >
-                  <Icon style={{ height: '1.25rem', width: '1.25rem' }} />
-                </Button>
-              ))}
+              <Button 
+                variant="ghost" 
+                style={socialButtonStyles}
+              >
+                <Twitter style={{ height: '1.25rem', width: '1.25rem' }} />
+              </Button>
+              <Button 
+                variant="ghost" 
+                style={socialButtonStyles}
+              >
+                <Instagram style={{ height: '1.25rem', width: '1.25rem' }} />
+              </Button>
+              <Button 
+                variant="ghost" 
+                style={socialButtonStyles}
+              >
+                <Github style={{ height: '1.25rem', width: '1.25rem' }} />
+              </Button>
             </div>
           </div>
 
@@ -132,10 +170,7 @@ const Footer = () => {
                       width: '0.75rem', 
                       display: 'inline-block',
                       marginLeft: '0.25rem',
-                      transition: 'transform 0.2s ease',
-                      ':hover': {
-                        transform: 'translate(2px, -2px)'
-                      }
+                      verticalAlign: 'middle'
                     }} />
                   </Link>
                 </li>
@@ -144,23 +179,11 @@ const Footer = () => {
           </div>
         </div>
 
-        <div style={{
-          borderTop: '1px solid var(--gray-200)',
-          marginTop: '3rem',
-          paddingTop: '2rem',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '1rem',
-          '@media (min-width: 768px)': {
-            flexDirection: 'row',
-            justifyContent: 'space-between'
-          }
-        }}>
-          <p style={{ color: 'var(--gray-500)', fontSize: '0.875rem' }}>
+        <div style={footerBottomStyles}>
+          <p style={copyrightStyles}>
             © {currentYear} PillPal. All rights reserved.
           </p>
-          <div style={{ color: 'var(--gray-500)', fontSize: '0.875rem' }}>
+          <div style={creditStyles}>
             <span>Crafted with care for better health</span>
           </div>
         </div>

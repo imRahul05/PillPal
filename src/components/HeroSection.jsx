@@ -1,172 +1,79 @@
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import '../index.css';
+import { useTheme } from '../contexts/ThemeContext';
+import dashboardImage from '../assets/img.jpg'; // Adjust path and filename as needed
 
 const HeroSection = () => {
   const navigate = useNavigate();
-  
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const { isDarkMode } = useTheme(); 
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleGetStarted = () => {
     navigate('/login');
   };
 
-  const sectionStyles = {
-    paddingTop: '6rem',
-    paddingBottom: '3rem',
-    position: 'relative'
-  };
-
-  const gradientBgStyles = {
-    position: 'absolute',
-    inset: 0,
-    background: 'linear-gradient(to bottom, var(--white), var(--blue-50))',
-    overflow: 'hidden'
-  };
-
-  const containerStyles = {
-    padding: '0 1.5rem',
-    margin: '0 auto',
-    maxWidth: '80rem',
-    position: 'relative',
-    zIndex: 10
-  };
-
-  const headerContainerStyles = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    marginBottom: '4rem'
-  };
-
-  const badgeStyles = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    padding: '0.25rem 0.75rem',
-    borderRadius: '9999px',
-    border: '1px solid var(--gray-200)',
-    gap: '0.5rem',
-    marginBottom: '2rem',
-    background: 'var(--gray-50)'
-  };
-
-  const checkIconStyles = {
-    background: 'rgba(var(--primary-rgb), 0.2)',
-    color: 'var(--primary)',
-    height: '1.5rem',
-    width: '1.5rem',
-    borderRadius: '9999px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
-
-  const headingStyles = {
-    fontSize: 'clamp(2.25rem, 5vw, 3.75rem)',
-    fontWeight: 700,
-    letterSpacing: '-0.025em',
-    marginBottom: '1.5rem',
-    background: 'linear-gradient(to bottom, var(--black), var(--gray-700))',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent'
-  };
-
-  const descriptionStyles = {
-    fontSize: '1.125rem',
-    color: 'var(--gray-600)',
-    maxWidth: '42rem',
-    margin: '0 auto',
-    marginBottom: '2.5rem'
-  };
-
-  const imageContainerStyles = {
-    position: 'relative',
-    width: '100%',
-    maxWidth: '64rem',
-    margin: '0 auto',
-    aspectRatio: '16/9',
-    overflow: 'hidden',
-    borderRadius: '0.75rem',
-    boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)'
-  };
-
   return (
-    <section style={sectionStyles}>
-      <div style={gradientBgStyles}>
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: 'var(--grid-pattern)',
-          backgroundPosition: 'center',
-          maskImage: 'linear-gradient(to bottom, black, transparent)'
-        }} />
+    <section className="relative pt-24 pb-12">
+      <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--background))] to-[hsl(var(--blue-50))] overflow-hidden">
+        <div className="absolute inset-0 bg-[var(--grid-pattern)] bg-center mask-[linear-gradient(to_bottom,black,transparent)]" />
       </div>
       
-      <div style={containerStyles}>
-        <div style={headerContainerStyles}>
-          <div style={badgeStyles}>
-            <div style={checkIconStyles}>
-              <Check style={{ height: '0.875rem', width: '0.875rem' }} />
+      <div className="relative z-10 px-6 max-w-7xl mx-auto">
+        <div className="flex flex-col items-center text-center mb-16">
+          <div className="inline-flex items-center px-3 py-1 rounded-full border border-[hsl(var(--border))] gap-2 mb-8 bg-[hsl(var(--muted))]">
+            <div className="flex items-center justify-center h-6 w-6 bg-[rgba(var(--primary-rgb),0.2)] rounded-full">
+              <Check className="h-4 w-4 text-primary" />
             </div>
-            <span style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--gray-600)' }}>
+            <span className="text-sm font-medium text-[hsl(var(--gray-600))]">
               Easy medication management
             </span>
           </div>
           
-          <h1 style={headingStyles}>
-            Never Miss a Pill <br style={{ display: 'none', '@media (min-width: 640px)': { display: 'block' } }} />
-            <span style={{ color: 'var(--primary)' }}>Stay Healthy</span>
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 bg-gradient-to-b from-[hsl(var(--foreground))] to-[hsl(var(--gray-700))] bg-clip-text text-transparent">
+            Never Miss a Pill{!isMobile && <br />}
+            <span className="text-primary">Stay Healthy</span>
           </h1>
           
-          <p style={descriptionStyles}>
+          <p className="text-lg text-[hsl(var(--gray-600))] max-w-3xl mx-auto mb-10">
             PillPal helps you manage medications, track doses, and stay on top of refills with smart reminders and a simple tracking system.
           </p>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', '@media (min-width: 640px)': { flexDirection: 'row' } }}>
+          <div className={isMobile ? "flex-col" : "flex-row"} style={{ gap: '1rem', display: 'flex' }}>
             <Button 
               onClick={handleGetStarted}
-              style={{
-                borderRadius: '9999px',
-                fontSize: '1rem',
-                padding: '0 2rem',
-                height: '3.5rem',
-                boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)'
-              }}
+              className="rounded-full text-base px-8 h-14 shadow-md"
             >
               Get Started
-              <ArrowRight style={{ marginLeft: '0.5rem', height: '1.25rem', width: '1.25rem' }} />
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
               variant="outline" 
-              style={{
-                borderRadius: '9999px',
-                fontSize: '1rem',
-                padding: '0 2rem',
-                height: '3.5rem',
-                borderWidth: '1.5px'
-              }}
+              className="rounded-full text-base px-8 h-14 border-2"
             >
               How It Works
             </Button>
           </div>
         </div>
         
-        <div style={imageContainerStyles}>
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(to bottom right, rgba(var(--primary-rgb), 0.05), rgba(var(--primary-rgb), 0.2))'
-          }}></div>
+        <div className="relative w-full max-w-4xl mx-auto aspect-video overflow-hidden rounded-xl shadow-lg">
+          <div className="absolute inset-0 bg-gradient-to-br from-[rgba(var(--primary-rgb),0.05)] to-[rgba(var(--primary-rgb),0.2)]" />
           <img
-            src="/placeholder.svg"
+            src={dashboardImage}
             alt="PillPal Dashboard Preview"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            className="w-full h-full object-cover"
           />
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: '0.75rem'
-          }}></div>
+          <div className="absolute inset-0 border border-white/10 rounded-xl" />
         </div>
       </div>
     </section>

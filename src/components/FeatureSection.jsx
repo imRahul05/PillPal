@@ -5,7 +5,6 @@ import {
     LayoutDashboard, 
     Repeat, 
     Search, 
-    Shield, 
     User, 
     Wifi, 
     MessageSquare 
@@ -94,15 +93,7 @@ import {
             ))}
           </div>
   
-          {/* Security Badge */}
-          <div className="max-w-3xl mx-auto">
-            <div className="flex items-center justify-center gap-3 py-4 px-6 rounded-full bg-secondary/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-800/50 shadow-glass-sm">
-              <Shield className="text-primary h-5 w-5" />
-              <span className="text-sm text-gray-600 dark:text-gray-300">
-                Your data is securely encrypted and never shared with third parties
-              </span>
-            </div>
-          </div>
+         
         </div>
       </section>
     );

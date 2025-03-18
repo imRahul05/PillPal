@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LucideIcon } from "lucide-react";
+import { Icon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const FeatureCard = ({ icon: Icon, title, description, className, iconClassName, style }) => {

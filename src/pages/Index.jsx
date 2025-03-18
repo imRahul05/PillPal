@@ -1,3 +1,4 @@
+// src/components/Index.jsx
 import { useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -5,8 +6,11 @@ import HeroSection from '@/components/HeroSection';
 import FeatureSection from '@/components/FeatureSection';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Index = () => {
+  const { isDarkMode } = useTheme(); // Access theme state
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -28,12 +32,14 @@ const Index = () => {
             background: 'linear-gradient(to bottom, var(--bg-gray-50), var(--bg-gray-100))'
           }} />
           <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '0 1.5rem' }}>
-            <div style={{
-              background: 'var(--bg-white)',
-              borderRadius: '1.5rem',
-              boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)',
-              overflow: 'hidden'
-            }}>
+            <div
+              style={{
+                background: isDarkMode ? 'hsl(var(--card))' : 'var(--bg-white)', // Conditional background
+                borderRadius: '1.5rem',
+                boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)',
+                overflow: 'hidden'
+              }}
+            >
               <div style={{ position: 'relative', padding: '3rem 4rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ position: 'relative', zIndex: 10 }}>
                   <h2 style={{ fontSize: '2.25rem', fontWeight: 600, marginBottom: '1rem', letterSpacing: '-0.025em' }}>
@@ -43,7 +49,7 @@ const Index = () => {
                     Get started with PillPal today and experience the easiest way to manage your medications.
                   </p>
                   
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'center' ,padding:'0.8rem'}}>
                     <Button style={{ borderRadius: '9999px', height: '3.5rem', padding: '0 2rem', fontSize: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
                       Get Started <ArrowRight style={{ marginLeft: '0.5rem', height: '1.25rem', width: '1.25rem' }} />
                     </Button>

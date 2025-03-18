@@ -1,1 +1,209 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+/* Extend Tailwind’s theme to include custom utilities */
+@theme {
+  --border-color-border: hsl(var(--border));
+  --background-color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --background-color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --background-color-primary: hsl(var(--primary));
+  --color-primary: hsl(var(--primary));
+  --color-gray-600: hsl(var(--gray-600));
+  --color-gray-700: hsl(var(--gray-700));
+  --background-color-blue-50: hsl(var(--blue-50));
+  --background-color-white: hsl(var(--card)); /* Map to --card */
+  --background-color-gray-50: hsl(var(--muted)); /* Map to --muted */
+  --background-color-gray-100: hsl(var(--secondary)); /* Map to --secondary */
+  --background-color-accent: hsl(var(--accent));
+  --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.1);
+  --shadow-neo: 6px 6px 12px rgba(0, 0, 0, 0.1), -6px -6px 12px rgba(255, 255, 255, 0.9);
+  --shadow-neo-sm: 3px 3px 6px rgba(0, 0, 0, 0.1), -3px -3px 6px rgba(255, 255, 255, 0.9);
+  --shadow-neo-inset: inset 3px 3px 6px rgba(0, 0, 0, 0.1), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+}
+
+/* Base layer for global styles and theme variables */
+@layer base {
+  :root {
+    --background: 210 50% 98%;
+    --foreground: 210 50% 10%;
+    --card: 0 0% 100%; /* White in light mode */
+    --card-foreground: 210 50% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 50% 10%;
+    --primary: 210 90% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 210 50% 10%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 210 40% 40%;
+    --accent: 262 83% 58%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 210 90% 60%;
+    --radius: 1rem;
+    --sidebar-background: 210 50% 98%;
+    --sidebar-foreground: 210 50% 10%;
+    --sidebar-primary: 210 90% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 20% 96%;
+    --sidebar-accent-foreground: 210 50% 10%;
+    --sidebar-border: 210 20% 90%;
+    --sidebar-ring: 210 90% 60%;
+    --gray-600: 210 40% 40%;
+    --gray-700: 210 20% 20%;
+    --blue-50: 210 80% 95%;
+  }
+
+  .dark {
+    --background: 210 50% 5%;
+    --foreground: 210 20% 98%;
+    --card: 210 50% 8%; /* Dark gray in dark mode */
+    --card-foreground: 210 20% 98%;
+    --popover: 210 50% 8%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 210 90% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 50% 15%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 210 50% 15%;
+    --muted-foreground: 210 40% 70%;
+    --accent: 262 83% 58%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 50% 15%;
+    --input: 210 50% 15%;
+    --ring: 210 90% 60%;
+    --sidebar-background: 210 50% 8%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-primary: 210 90% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 50% 15%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 210 50% 15%;
+    --sidebar-ring: 210 90% 60%;
+    --gray-600: 210 40% 70%;
+    --gray-700: 210 20% 80%;
+    --blue-50: 210 80% 10%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-medium tracking-tight;
+  }
+}
+
+/* Rest of your index.css remains the same */
+/* Rest of your index.css remains the same */
+/* Rest of your index.css remains the same */
+
+/* Rest of your index.css (fonts, components, transitions, etc.) remains the same */
+
+/* Rest of your index.css remains the same (fonts, components, transitions, etc.) */
+
+/* Font definitions (placeholders for local files) */
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('/fonts/SFProDisplay-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('/fonts/SFProDisplay-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('/fonts/SFProDisplay-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('/fonts/SFProDisplay-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom components */
+@layer components {
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-glass;
+  }
+  
+  .glass-panel-dark {
+    @apply bg-black/20 backdrop-blur-lg border border-white/10 shadow-glass;
+  }
+  
+  .neo-panel {
+    @apply bg-secondary shadow-neo rounded-2xl p-6;
+  }
+  
+  .neo-button {
+    @apply shadow-neo-sm hover:shadow-none active:shadow-neo-inset transition-shadow duration-300 rounded-xl;
+  }
+  
+  .pill {
+    @apply px-3 py-1 rounded-full text-xs font-medium tracking-wide;
+  }
+}
+
+/* Page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms, transform 500ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 500ms, transform 500ms;
+}
+
+/* Define pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
