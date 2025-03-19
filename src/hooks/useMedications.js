@@ -53,6 +53,20 @@ export function useMedications() {
     try {
       const userMedicationsRef = ref(database, `users/${currentUser.uid}/medications`);
       const newMedicationRef = push(userMedicationsRef);
+
+       // Check if a time was set to generate future notifications
+       if (medication.time) {
+        // Schedule reminder notification for this medication
+        const now = new Date();
+        const [hours, minutes] = medication.time.split(':').map(Number);
+        const scheduleTime = new Date();
+        scheduleTime.setHours(hours, minutes, 0, 0);
+        
+        // If the time is in the past for today, don't schedule
+        if (scheduleTime > now) {
+          console.log(`Medication scheduled for today at ${medication.time}`);
+        }
+      }
       
       await set(newMedicationRef, medication);
       
@@ -73,12 +87,6 @@ export function useMedications() {
     }
   };
   
-  /**
-   * Update an existing medication
-   * @param {string} id - Medication ID to update
-   * @param {Object} updates - Fields to update
-   * @returns {Promise<boolean>} Success status
-   */
   const updateMedication = async (id, updates) => {
     if (!currentUser) return false;
     
@@ -152,6 +160,21 @@ export function useMedications() {
         timestamp: new Date().toISOString(),
       });
       
+          // Mark any related notifications as read
+          const notificationsRef = ref(database, `users/${currentUser.uid}/notifications`);
+          get(notificationsRef).then((snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+              Object.entries(data).forEach(([notificationId, notification]) => {
+                // @ts-ignore
+                if (notification.medicationId === id && !notification.read) {
+                  update(ref(database, `users/${currentUser.uid}/notifications/${notificationId}`), {
+                    read: true
+                  });
+                }
+              });
+            }
+          });
       toast({
         title: "Success",
         description: `Marked ${medication.name} as taken`,

@@ -12,14 +12,17 @@
   --color-gray-600: hsl(var(--gray-600));
   --color-gray-700: hsl(var(--gray-700));
   --background-color-blue-50: hsl(var(--blue-50));
-  --background-color-white: hsl(var(--card)); /* Map to --card */
-  --background-color-gray-50: hsl(var(--muted)); /* Map to --muted */
-  --background-color-gray-100: hsl(var(--secondary)); /* Map to --secondary */
+  --background-color-white: hsl(var(--card));
+  --background-color-gray-50: hsl(var(--muted));
+  --background-color-gray-100: hsl(var(--secondary));
   --background-color-accent: hsl(var(--accent));
   --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.1);
-  --shadow-neo: 6px 6px 12px rgba(0, 0, 0, 0.1), -6px -6px 12px rgba(255, 255, 255, 0.9);
-  --shadow-neo-sm: 3px 3px 6px rgba(0, 0, 0, 0.1), -3px -3px 6px rgba(255, 255, 255, 0.9);
-  --shadow-neo-inset: inset 3px 3px 6px rgba(0, 0, 0, 0.1), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+  --shadow-neo: 6px 6px 12px rgba(0, 0, 0, 0.1),
+    -6px -6px 12px rgba(255, 255, 255, 0.9);
+  --shadow-neo-sm: 3px 3px 6px rgba(0, 0, 0, 0.1),
+    -3px -3px 6px rgba(255, 255, 255, 0.9);
+  --shadow-neo-inset: inset 3px 3px 6px rgba(0, 0, 0, 0.1),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.9);
 }
 
 /* Base layer for global styles and theme variables */
@@ -61,25 +64,35 @@
 
   .dark {
     --background: 210 50% 5%;
+
     --foreground: 210 20% 98%;
-    --card: 210 50% 8%; /* Dark gray in dark mode */
+
+    --card: 210 50% 8%;
     --card-foreground: 210 20% 98%;
+
     --popover: 210 50% 8%;
     --popover-foreground: 210 20% 98%;
+
     --primary: 210 90% 60%;
     --primary-foreground: 0 0% 100%;
+
     --secondary: 210 50% 15%;
     --secondary-foreground: 210 20% 98%;
+
     --muted: 210 50% 15%;
     --muted-foreground: 210 40% 70%;
+
     --accent: 262 83% 58%;
     --accent: 262 83% 58%;
     --accent-foreground: 0 0% 100%;
+
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
+
     --border: 210 50% 15%;
     --input: 210 50% 15%;
     --ring: 210 90% 60%;
+
     --sidebar-background: 210 50% 8%;
     --sidebar-foreground: 210 20% 98%;
     --sidebar-primary: 210 90% 60%;
@@ -88,6 +101,7 @@
     --sidebar-accent-foreground: 210 20% 98%;
     --sidebar-border: 210 50% 15%;
     --sidebar-ring: 210 90% 60%;
+
     --gray-600: 210 40% 70%;
     --gray-700: 210 20% 80%;
     --blue-50: 210 80% 10%;
@@ -106,47 +120,43 @@
     @apply bg-background text-foreground font-sans;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-sans font-medium tracking-tight;
   }
 }
 
-/* Rest of your index.css remains the same */
-/* Rest of your index.css remains the same */
-/* Rest of your index.css remains the same */
-
-/* Rest of your index.css (fonts, components, transitions, etc.) remains the same */
-
-/* Rest of your index.css remains the same (fonts, components, transitions, etc.) */
-
-/* Font definitions (placeholders for local files) */
 @font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SFProDisplay-Regular.woff2') format('woff2');
+  font-family: "SF Pro Display";
+  src: url("/fonts/SFProDisplay-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SFProDisplay-Medium.woff2') format('woff2');
+  font-family: "SF Pro Display";
+  src: url("/fonts/SFProDisplay-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SFProDisplay-Semibold.woff2') format('woff2');
+  font-family: "SF Pro Display";
+  src: url("/fonts/SFProDisplay-Semibold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'SF Pro Display';
-  src: url('/fonts/SFProDisplay-Bold.woff2') format('woff2');
+  font-family: "SF Pro Display";
+  src: url("/fonts/SFProDisplay-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -157,19 +167,19 @@
   .glass-panel {
     @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-glass;
   }
-  
+
   .glass-panel-dark {
     @apply bg-black/20 backdrop-blur-lg border border-white/10 shadow-glass;
   }
-  
+
   .neo-panel {
     @apply bg-secondary shadow-neo rounded-2xl p-6;
   }
-  
+
   .neo-button {
     @apply shadow-neo-sm hover:shadow-none active:shadow-neo-inset transition-shadow duration-300 rounded-xl;
   }
-  
+
   .pill {
     @apply px-3 py-1 rounded-full text-xs font-medium tracking-wide;
   }
@@ -200,10 +210,39 @@
 
 /* Define pulse animation */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
     opacity: 0.5;
   }
+}
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@keyframes ping {
+  0% { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.animate-slide-in-left {
+  animation: slide-in-left 0.3s ease-out forwards;
+}
+@keyframes slide-in-left {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.animate-slide-in-up {
+  animation: slide-in-up 0.3s ease-out forwards;
+}
+@keyframes slide-in-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }

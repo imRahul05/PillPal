@@ -20,7 +20,7 @@ const Signup = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 

@@ -1,5 +1,5 @@
 // src/components/Index.jsx
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import HeroSection from '@/components/HeroSection';
@@ -7,14 +7,26 @@ import FeatureSection from '@/components/FeatureSection';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useTheme } from '../contexts/ThemeContext';
+import TopButton from '../components/TopButton';
+
 
 const Index = () => {
   const { isDarkMode } = useTheme(); // Access theme state
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    const handleScroll = () => {
+      setIsVisible(window.scrollY > 300);
+    };
 
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
@@ -63,7 +75,8 @@ const Index = () => {
           </div>
         </section>
       </main>
-      
+      <TopButton onClick={scrollToTop}
+      className={`transition-opacity ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}/>
       <Footer />
     </div>
   );

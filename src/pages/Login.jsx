@@ -17,8 +17,9 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  
 
-  const handleSubmit = async() => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
@@ -63,6 +64,7 @@ const Login = () => {
                       className="pl-10"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      autoComplete="username"
                       required
                     />
                   </div>
@@ -86,6 +88,7 @@ const Login = () => {
                       className="pl-10"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
+                      autoComplete="current-password"
                       required
                     />
                   </div>
