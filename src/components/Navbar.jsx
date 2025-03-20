@@ -202,7 +202,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Navigation Toggle */}
-          <div className="flex items-center space-x-4 md:hidden">
+          <div className="flex items-center space-x-4 md:hidden relative z-[60]">
             <Button
               variant="ghost"
               size="icon"
