@@ -94,12 +94,26 @@ const Medications = () => {
     await markMedicationAsTaken(medication.id);
   };
 
+  const handleReorderActiveMedications = (reorderedMeds) => {
+    reorderMedications(reorderedMeds);
+  };
+
+  const handleReorderInactiveMedications = (reorderedMeds) => {
+    reorderMedications(reorderedMeds);
+  };
+
+
+
   // Filter medications based on search term
   const filteredMedications = medications.filter(med => 
     med.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     med.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+
+
+  const activeMedications = filteredMedications.filter(med => med.status === 'active');
+  const inactiveMedications = filteredMedications.filter(med => med.status === 'inactive');
   // Get color based on medication category
   const getCategoryColor = (category) => {
     const colorMap = {
@@ -122,6 +136,7 @@ const Medications = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
+     
       
       <main className="flex-1 pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-6">
@@ -277,14 +292,14 @@ const Medications = () => {
                     </Card>
                   ))}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   <DraggableMedicationList
                     medications={activeMedications}
                     onReorder={handleReorderActiveMedications}
                     renderItem={renderActiveMedicationCard}
                     droppableId="active-medications"
                   />
-                </div>
+                </div> */}
               </TabsContent>
               
               {/* Inactive Medications */}
@@ -355,14 +370,14 @@ const Medications = () => {
                     </Card>
                   ))}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   <DraggableMedicationList
                     medications={inactiveMedications}
                     onReorder={handleReorderInactiveMedications}
                     renderItem={renderInactiveMedicationCard}
                     droppableId="inactive-medications"
                   />
-                </div>
+                </div> */}
               </TabsContent>
             </Tabs>
           )}

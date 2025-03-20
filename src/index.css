@@ -246,3 +246,154 @@
   from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
+
+
+/* Add to your existing index.css */
+
+/* Ensure calendar and select dropdowns have proper backgrounds and layout */
+@layer components {
+  /* Calendar styles */
+  .calendar-container {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    padding: 0.5rem;
+  }
+
+  .calendar-header {
+    background: hsl(var(--card));
+    border-bottom: 1px solid hsl(var(--border));
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .calendar-day-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    padding: 0.5rem;
+  }
+
+  .calendar-day {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    transition: background 0.2s;
+  }
+
+  .calendar-day:hover {
+    background: hsl(var(--muted));
+  }
+
+  .calendar-day--selected {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .calendar-day--disabled {
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+  }
+
+  .calendar-nav-button {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    color: hsl(var(--foreground));
+  }
+
+  .calendar-nav-button:hover {
+    background: hsl(var(--muted));
+  }
+
+  /* Popover and Select content */
+  [data-radix-popper-content], [data-radix-select-content] {
+    background: hsl(var(--card)) !important;
+    border: 1px solid hsl(var(--border)) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    border-radius: var(--radius) !important;
+  }
+
+  /* Ensure select items are styled */
+  [data-radix-select-item] {
+    padding: 0.5rem 1rem;
+    color: hsl(var(--foreground));
+    transition: background 0.2s;
+  }
+
+  [data-radix-select-item]:hover {
+    background: hsl(var(--muted));
+  }
+
+  [data-radix-select-item][data-highlighted] {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+}
+.calendar-day-grid > * {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Add to your existing index.css */
+
+/* Ensure calendar uses theme variables */
+@layer components {
+  .calendar-container {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    padding: 0.5rem;
+  }
+
+  /* Override react-day-picker classes */
+  .rdp {
+    --rdp-background-color: hsl(var(--card));
+    --rdp-accent-color: hsl(var(--primary));
+    --rdp-accent-foreground: hsl(var(--primary-foreground));
+    --rdp-muted-color: hsl(var(--muted));
+    --rdp-muted-foreground: hsl(var(--muted-foreground));
+  }
+
+  .rdp-caption_label {
+    color: hsl(var(--foreground));
+  }
+
+  .rdp-head_cell {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .rdp-day {
+    color: hsl(var(--foreground));
+  }
+
+  .rdp-day_today {
+    background: hsl(var(--accent)) !important;
+    color: hsl(var(--accent-foreground)) !important;
+    font-weight: 600;
+  }
+
+  .rdp-day_selected {
+    background: hsl(var(--primary)) !important;
+    color: hsl(var(--primary-foreground)) !important;
+  }
+
+  .rdp-day_outside, .rdp-day_disabled {
+    color: hsl(var(--muted-foreground)) !important;
+    opacity: 0.3 !important;
+  }
+
+  .rdp-nav_button:hover {
+    background: hsl(var(--muted)) !important;
+  }
+}
+
+/* Rest of your index.css remains the same */
+/* Rest of your index.css remains the same */
