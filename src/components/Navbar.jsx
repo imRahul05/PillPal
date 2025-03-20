@@ -58,15 +58,34 @@ const Navbar = () => {
     }
   };
 
-  const navItems = [
-    { name: 'Home', path: '/' },
+  // const navItems = [
+  //   { name: 'Home', path: '/' },
+  //   { name: 'Dashboard', path: '/dashboard', protected: true },
+  //   { name: 'Medications', path: '/medications', protected: true },
+  //   { name: 'Reports', path: '/reports', protected: true }, // Added Reports
+  //   { name: 'Profile', path: '/profile', protected: true },
+  // ];
+
+  // const filteredNavItems = navItems.filter(item => 
+  //   !item.protected || (item.protected && currentUser));
+    const navItems = [
+    { name: 'Home', path: '/', hideWhenLoggedIn: true },
     { name: 'Dashboard', path: '/dashboard', protected: true },
     { name: 'Medications', path: '/medications', protected: true },
-    { name: 'Reports', path: '/reports', protected: true }, // Added Reports
+    { name: 'Reports', path: '/reports', protected: true },
     { name: 'Profile', path: '/profile', protected: true },
   ];
-
-  const filteredNavItems = navItems.filter(item => !item.protected || (item.protected && currentUser));
+  
+  const filteredNavItems = navItems.filter(item => {
+    if (currentUser && item.hideWhenLoggedIn) {
+      return false;
+    }
+    if (item.protected) {
+      return currentUser ? true : false;
+    }
+    
+    return true;
+  });
 
   const getInitials = () => {
     if (currentUser?.displayName) {
