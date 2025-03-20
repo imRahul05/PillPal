@@ -1,6 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { BrowserRouter , Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter , Routes, Route } from 'react-router-dom';
  import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -13,12 +13,14 @@ import ReportsPage from "./pages/Reports";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import {useAuth} from './contexts/AuthContext';
 
 
 const queryClient = new QueryClient();
-
 const App = () => (
+ 
   <QueryClientProvider client={queryClient}>
+    
     <AuthProvider>
       <ThemeProvider>
       <TooltipProvider>
@@ -26,6 +28,7 @@ const App = () => (
         {/* <Sonner /> */}
         <BrowserRouter>
           <Routes>
+           
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

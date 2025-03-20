@@ -48,7 +48,7 @@ const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
-
+ 
   const handleLogout = async () => {
     try {
       await logout();

@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 import '../index.css';
 import { useTheme } from '../contexts/ThemeContext';
 import dashboardImage from '../assets/img.jpg'; // Adjust path and filename as needed
+import { useAuth } from '@/contexts/AuthContext';
 
 const HeroSection = () => {
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const { isDarkMode } = useTheme(); 
-
+ const {currentUser} = useAuth();
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 640);
@@ -20,7 +21,12 @@ const HeroSection = () => {
   }, []);
 
   const handleGetStarted = () => {
+    console.log(currentUser);
+    if(currentUser){
+      navigate('/dashboard');
+    }else{
     navigate('/login');
+    }
   };
 
   return (

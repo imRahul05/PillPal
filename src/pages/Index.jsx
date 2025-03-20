@@ -8,13 +8,21 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useTheme } from '../contexts/ThemeContext';
 import TopButton from '../components/TopButton';
+import { useNavigate } from 'react-router-dom';
+import {useAuth} from '../contexts/AuthContext';
 
 
 const Index = () => {
-  const { isDarkMode } = useTheme(); // Access theme state
+  const {currentUser} = useAuth();
+  const navigate = useNavigate();
+  const { isDarkMode } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
+  
 
   useEffect(() => {
+    if (currentUser) {
+      navigate("/dashboard"); // Redirect to dashboard if user is logged in
+    }
     window.scrollTo(0, 0);
     const handleScroll = () => {
       setIsVisible(window.scrollY > 300);
@@ -22,7 +30,7 @@ const Index = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [currentUser, navigate]);
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

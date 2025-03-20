@@ -36,7 +36,7 @@ const DatePicker = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-auto bg-[hsl(var(--card))] border-[hsl(var(--border))] z-[60] p-0"
+        className="w-auto bg-[hsl(var(--card))] border-[hsl(var(--border))] z-[70] p-0"
         align="start"
       >
         <Calendar

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const Signup = () => {
+  const {currentUser} = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +21,13 @@ const Signup = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/dashboard");
+    }
+    window.scrollTo(0, 0);
+  }, [currentUser, navigate]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
