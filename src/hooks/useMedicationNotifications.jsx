@@ -1,9 +1,10 @@
 
 import { useState, useEffect } from 'react';
-import { ref, onValue, update } from 'firebase/database';
+import { ref, onValue, update ,remove} from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
+
 
 
 export function useMedicationNotifications() {
@@ -39,7 +40,7 @@ export function useMedicationNotifications() {
     return () => unsubscribe();
   }, [currentUser]);
 
-  // Check for medications that are due now
+ 
   useEffect(() => {
     if (!currentUser) return;
     
@@ -140,6 +141,18 @@ export function useMedicationNotifications() {
       return false;
     }
   };
+  const clearAllNotifications = async () => {
+    if (!currentUser) return false;
+    
+    try {
+      const userNotificationsRef = ref(database, `users/${currentUser.uid}/notifications`);
+      await remove(userNotificationsRef);
+      return true;
+    } catch (error) {
+      console.error("Error clearing notifications:", error);
+      return false;
+    }
+  };
 
   // Get unread count
   const getUnreadCount = () => {
@@ -150,6 +163,7 @@ export function useMedicationNotifications() {
     notifications,
     activeAlert,
     markAsRead,
+    clearAllNotifications,
     getUnreadCount
   };
 }

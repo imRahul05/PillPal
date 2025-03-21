@@ -248,14 +248,7 @@
 }
 
 
-/* Add to your existing index.css */
 
-/* Ensure calendar and select dropdowns have proper backgrounds and layout */
-/* @layer components {
-  /* Calendar styles */
-  /* Add to your existing index.css */
-
-/* Ensure calendar uses theme variables */
 @layer components {
   .calendar-container  {
     background: hsl(var(--card)) ;

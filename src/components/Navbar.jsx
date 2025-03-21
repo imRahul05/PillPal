@@ -256,15 +256,16 @@ const Navbar = () => {
               </Link>
             ))}
 
-            {currentUser ? (
+            {currentUser ? (       
               <Button
                 onClick={handleLogout}
                 className="rounded-full w-full shadow-glass-sm animate-slide-in-up"
                 variant="destructive"
                 style={{ animationDelay: "0.3s" }}
               >
-                <LogOut className="mr-2 h-5 w-5" />
-                Logout
+
+                <LogOut className="mr-2 h-5 w-5" style={{color:'red'}} />
+              <span  style={{color:'red'}}>  Logout</span>
               </Button>
             ) : (
               <div className="flex flex-col gap-3 pt-4">

@@ -1,6 +1,6 @@
 // src/components/NotificationsDropdown.jsx
-import React from 'react';
-import { Bell, Check, Clock } from 'lucide-react';
+import React, { useState } from 'react';
+import { Bell, Check, Clock, Trash2 } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,23 +12,53 @@ import {
 import { Button } from '@/components/ui/button';
 import { useMedicationNotifications } from '@/hooks/useMedicationNotifications';
 import { cn } from '@/lib/utils';
-import { useNavigate } from 'react-router-dom';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useToast } from '@/hooks/use-toast';
 
 const NotificationsDropdown = () => {
-  const navigate = useNavigate();
-  const { notifications, markAsRead, getUnreadCount } = useMedicationNotifications();
+  const { notifications, markAsRead, getUnreadCount, clearAllNotifications } = useMedicationNotifications();
   const unreadCount = getUnreadCount();
+  const [open, setOpen] = useState(false);
+  const { toast } = useToast();
 
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
-  const handleNotificationClick = (notificationId) => {
-    markAsRead(notificationId);
-    navigate(`/medications/${notificationId}`); // Adjust the path as needed
+
+  const handleClearAll = async () => {
+    const success = await clearAllNotifications();
+    
+    if (success) {
+      toast({
+        title: "Notifications cleared",
+        description: "All notifications have been removed",
+        duration: 3000,
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to clear notifications. Please try again.",
+        variant: "destructive",
+        duration: 3000,
+      });
+    }
+    
+    setOpen(false);
   };
+
   return (
-    <DropdownMenu  onClick={() => handleNotificationClick(notification.id)}>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -91,6 +121,40 @@ const NotificationsDropdown = () => {
             ))}
           </div>
         )}
+        <DropdownMenuSeparator className="bg-[hsl(var(--border))]" />
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <button
+              className={cn(
+                "block w-full text-left py-3 px-4 text-sm text-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))]",
+                notifications.length === 0 && "opacity-50 cursor-not-allowed" // Disable if no notifications
+              )}
+              disabled={notifications.length === 0}
+            >
+              <div className="flex items-center">
+                <Trash2 className="h-4 w-4 mr-2" />
+                Clear All
+              </div>
+            </button>
+          </AlertDialogTrigger>
+          <AlertDialogContent className="bg-[hsl(var(--card))] border-[hsl(var(--border))] text-[hsl(var(--foreground))] z-[70]">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Clear All Notifications</AlertDialogTitle>
+              <AlertDialogDescription className="text-[hsl(var(--muted-foreground))]">
+                Are you sure you want to clear all notifications? This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="border-[hsl(var(--border))]">Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleClearAll}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                Clear All
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </DropdownMenuContent>
     </DropdownMenu>
   );

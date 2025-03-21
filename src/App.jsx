@@ -13,7 +13,6 @@ import ReportsPage from "./pages/Reports";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import {useAuth} from './contexts/AuthContext';
 
 
 const queryClient = new QueryClient();
