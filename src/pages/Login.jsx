@@ -1,42 +1,71 @@
-
-import { useState ,useEffect, use} from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Lock, ArrowRight } from "lucide-react";
+import { Mail, Lock, ArrowRight, User } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const Login = () => {
-   const {currentUser} = useAuth();
+  const { currentUser, login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const [loadingStates, setLoadingStates] = useState({
+    isLoadingRegular: false, 
+    isLoadingGuest: false, 
+  });
   const navigate = useNavigate();
-  
-   useEffect(() => {
+
+  useEffect(() => {
     if (currentUser) {
-      navigate("/dashboard"); 
+      setLoadingStates({
+        isLoadingRegular: false,
+        isLoadingGuest: false,
+      }); 
+      navigate("/dashboard");
     }
     window.scrollTo(0, 0);
+
+    return () => {
+      setLoadingStates({
+        isLoadingRegular: false,
+        isLoadingGuest: false,
+      }); 
+    };
   }, [currentUser, navigate]);
-  const handleSubmit = async(e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setIsLoading(true);
+    setLoadingStates((prev) => ({ ...prev, isLoadingRegular: true }));
 
     try {
-      await login(email, password);
-      navigate("/dashboard");
+      const result = await login(email, password);
+      console.log("Login result:", result); 
+     
     } catch (err) {
+      console.error("Login error:", err); // Debug the error
       setError("Failed to sign in. Please check your credentials.");
-    } finally {
-      setIsLoading(false);
+      setLoadingStates((prev) => ({ ...prev, isLoadingRegular: false })); // Reset on error
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    setError("");
+    setLoadingStates((prev) => ({ ...prev, isLoadingGuest: true }));
+
+    try {
+      const result = await login("demo@example.com", "demo@example.com");
+      console.log("Guest login result:", result); 
+     
+    } catch (err) {
+      console.error("Guest login error:", err); // Debug the error
+      setError("Failed to sign in as a guest. Please try again.");
+      setLoadingStates((prev) => ({ ...prev, isLoadingGuest: false })); // Reset on error
     }
   };
 
@@ -78,8 +107,8 @@ const Login = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
-                    <Link 
-                      to="/forgot-password" 
+                    <Link
+                      to="/forgot-password"
                       className="text-sm text-primary hover:underline underline-offset-4"
                     >
                       Forgot password?
@@ -99,20 +128,30 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full rounded-lg"
-                  disabled={isLoading}
+                  disabled={loadingStates.isLoadingRegular || loadingStates.isLoadingGuest} // Disable if either is loading
                 >
-                  {isLoading ? "Signing in..." : "Sign In"}
+                  {loadingStates.isLoadingRegular ? "Signing in..." : "Sign In"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full rounded-lg flex items-center justify-center gap-2"
+                  onClick={handleGuestLogin}
+                  disabled={loadingStates.isLoadingRegular || loadingStates.isLoadingGuest} // Disable if either is loading
+                >
+                  <User className="h-4 w-4" />
+                  {loadingStates.isLoadingGuest ? "Signing in..." : "Sign in as a Guest"}
                 </Button>
               </form>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
               <div className="text-center text-sm">
                 Don't have an account?{" "}
-                <Link 
-                  to="/signup" 
+                <Link
+                  to="/signup"
                   className="text-primary hover:underline underline-offset-4 font-medium"
                 >
                   Sign up
