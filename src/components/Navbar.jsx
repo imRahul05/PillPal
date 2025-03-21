@@ -264,8 +264,8 @@ const Navbar = () => {
                 style={{ animationDelay: "0.3s" }}
               >
 
-                <LogOut className="mr-2 h-5 w-5" style={{color:'red'}} />
-              <span  style={{color:'red'}}>  Logout</span>
+                <LogOut className="mr-2 h-5 w-5"  />
+                   Logout
               </Button>
             ) : (
               <div className="flex flex-col gap-3 pt-4">

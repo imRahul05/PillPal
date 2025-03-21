@@ -1,3 +1,4 @@
+// src/pages/Login.jsx
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -15,28 +16,29 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loadingStates, setLoadingStates] = useState({
-    isLoadingRegular: false, 
-    isLoadingGuest: false, 
+    isLoadingRegular: false,
+    isLoadingGuest: false,
   });
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentUser) {
+    // Only redirect if there’s no error and the user is logged in
+    if (currentUser && !error) {
       setLoadingStates({
         isLoadingRegular: false,
         isLoadingGuest: false,
-      }); 
+      });
       navigate("/dashboard");
     }
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
 
     return () => {
       setLoadingStates({
         isLoadingRegular: false,
         isLoadingGuest: false,
-      }); 
+      });
     };
-  }, [currentUser, navigate]);
+  }, [currentUser, error, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,13 +46,11 @@ const Login = () => {
     setLoadingStates((prev) => ({ ...prev, isLoadingRegular: true }));
 
     try {
-      const result = await login(email, password);
-      console.log("Login result:", result); 
-     
+      await login(email, password);
     } catch (err) {
-      console.error("Login error:", err); // Debug the error
+      console.error("Login error:", err);
       setError("Failed to sign in. Please check your credentials.");
-      setLoadingStates((prev) => ({ ...prev, isLoadingRegular: false })); // Reset on error
+      setLoadingStates((prev) => ({ ...prev, isLoadingRegular: false }));
     }
   };
 
@@ -59,13 +59,12 @@ const Login = () => {
     setLoadingStates((prev) => ({ ...prev, isLoadingGuest: true }));
 
     try {
-      const result = await login("demo@example.com", "demo@example.com");
-      console.log("Guest login result:", result); 
-     
+      await login("demo@example.com", "demo@example.com");
+      // No need to navigate here; useEffect will handle the redirect
     } catch (err) {
-      console.error("Guest login error:", err); // Debug the error
+      console.error("Guest login error:", err);
       setError("Failed to sign in as a guest. Please try again.");
-      setLoadingStates((prev) => ({ ...prev, isLoadingGuest: false })); // Reset on error
+      setLoadingStates((prev) => ({ ...prev, isLoadingGuest: false }));
     }
   };
 
@@ -131,7 +130,7 @@ const Login = () => {
                 <Button
                   type="submit"
                   className="w-full rounded-lg"
-                  disabled={loadingStates.isLoadingRegular || loadingStates.isLoadingGuest} // Disable if either is loading
+                  disabled={loadingStates.isLoadingRegular || loadingStates.isLoadingGuest}
                 >
                   {loadingStates.isLoadingRegular ? "Signing in..." : "Sign In"}
                 </Button>
@@ -140,7 +139,7 @@ const Login = () => {
                   variant="outline"
                   className="w-full rounded-lg flex items-center justify-center gap-2"
                   onClick={handleGuestLogin}
-                  disabled={loadingStates.isLoadingRegular || loadingStates.isLoadingGuest} // Disable if either is loading
+                  disabled={loadingStates.isLoadingRegular || loadingStates.isLoadingGuest}
                 >
                   <User className="h-4 w-4" />
                   {loadingStates.isLoadingGuest ? "Signing in..." : "Sign in as a Guest"}

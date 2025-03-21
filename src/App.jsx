@@ -12,6 +12,7 @@ import Medications from "./pages/Medications";
 import ReportsPage from "./pages/Reports";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import ForgotPasswordPage from './pages/ForgotPassword'
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />

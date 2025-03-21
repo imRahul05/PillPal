@@ -162,6 +162,19 @@
   font-display: swap;
 }
 
+@layer components {
+  .bg-destructive {
+    background: hsl(var(--destructive));
+  }
+
+  .text-destructive-foreground {
+    color: hsl(var(--destructive-foreground));
+  }
+
+  .border-destructive {
+    border-color: hsl(var(--destructive) / 0.5);
+  }
+}
 /* Custom components */
 @layer components {
   .glass-panel {
@@ -350,3 +363,7 @@
 }
 
 /* Rest of your index.css remains the same */
+
+
+/* Add to your existing index.css */
+

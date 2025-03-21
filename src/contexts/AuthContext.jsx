@@ -1,10 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { 
+import {  
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signOut, 
   onAuthStateChanged,
-  updateProfile 
+  updateProfile,
+  fetchSignInMethodsForEmail,
+  sendPasswordResetEmail
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useToast } from "@/components/ui/use-toast";
@@ -46,6 +48,7 @@ export const AuthProvider = ({ children }) => {
         description: errorMessage,
         variant: "destructive",
       });
+      throw error;
     }
   };
 
@@ -71,6 +74,7 @@ export const AuthProvider = ({ children }) => {
         description: errorMessage,
         variant: "destructive",
       });
+      throw error;
     }
   };
 
@@ -89,12 +93,39 @@ export const AuthProvider = ({ children }) => {
         description: "Failed to log out. Please try again.",
         variant: "destructive",
       });
+      throw error;
     }
   };
 
+  const resetPassword = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast({
+        title: "Password Reset Email Sent",
+        description: "Check your email for a link to reset your password.",
+        variant: "default",
+      });
+    } catch (error) {
+      console.error("Password reset error:", error);
+      let errorMessage = "Failed to send password reset email. Please try again.";
+      if (error.code === "auth/user-not-found") {
+        errorMessage = "No account found with that email address.";
+      } else if (error.code === "auth/invalid-email") {
+        errorMessage = "Invalid email address.";
+      }
+      toast({
+        title: "Reset Failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+      throw error;
+    }
+  };
   return (
-    <AuthContext.Provider value={{ currentUser, isLoading, login, signup, logout }}>
+    <AuthContext.Provider value={{ currentUser, isLoading, login, signup, logout,resetPassword }}>
       {!isLoading && children}
     </AuthContext.Provider>
   );
 };
+
+
