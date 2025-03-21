@@ -278,7 +278,7 @@ const Reports = () => {
             
             <Tabs defaultValue="history">
               <TabsList className="grid w-full grid-cols-1 mb-6" aria-label="Tabs">
-                
+
                 <TabsTrigger value="history">History Log</TabsTrigger>
                 {/* <TabsTrigger value="calendar">Calendar View</TabsTrigger> */}
               </TabsList>
@@ -436,9 +436,7 @@ const Reports = () => {
             </Tabs>
           </div>
         </div>
-      </main>
-      
-      <Footer />
+      </main>      
     </div>
   );
 };

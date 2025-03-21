@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const [isTablet, setIsTablet] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   
   // Handle responsive layout
   useEffect(() => {
     const handleResize = () => {
-      setIsTablet(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 768);
     };
     
     window.addEventListener('resize', handleResize);
@@ -29,13 +29,24 @@ const Footer = () => {
   };
 
   const gridStyles = {
-    display: 'grid',
-    gridTemplateColumns: isTablet ? '1fr' : 'repeat(4, 1fr)',
+    display: 'flex',
+    flexDirection: isMobile ? 'column' : 'row',
     gap: '2.5rem'
   };
 
   const logoColumnStyles = {
-    gridColumn: isTablet ? 'auto' : 'span 2'
+    flexBasis: isMobile ? '100%' : '50%',
+    textAlign: isMobile ? 'center' : 'left', // Center align on mobile
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: isMobile ? 'center' : 'flex-start' // Center items on mobile
+  };
+
+  const linksGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(2, 1fr)',
+    gap: '2rem',
+    width: isMobile ? '100%' : '50%'
   };
 
   const logoStyles = {
@@ -52,7 +63,8 @@ const Footer = () => {
   const descriptionStyles = {
     color: 'var(--gray-600)',
     marginBottom: '1.5rem',
-    maxWidth: '28rem'
+    maxWidth: isMobile ? '100%' : '28rem', // Full width on mobile for better centering
+    textAlign: isMobile ? 'center' : 'left' // Center text on mobile
   };
 
   const socialButtonStyles = {
@@ -76,8 +88,8 @@ const Footer = () => {
     marginTop: '3rem',
     paddingTop: '2rem',
     display: 'flex',
-    flexDirection: isTablet ? 'column' : 'row',
-    justifyContent: isTablet ? 'center' : 'space-between',
+    flexDirection: isMobile ? 'column' : 'row',
+    justifyContent: isMobile ? 'center' : 'space-between',
     alignItems: 'center',
     gap: '1rem'
   };
@@ -85,7 +97,7 @@ const Footer = () => {
   const copyrightStyles = {
     color: 'var(--gray-500)',
     fontSize: '0.875rem',
-    marginBottom: isTablet ? '1rem' : 0
+    marginBottom: isMobile ? '1rem' : 0
   };
 
   const creditStyles = {
@@ -112,16 +124,19 @@ const Footer = () => {
     <footer style={footerStyles}>
       <div style={containerStyles}>
         <div style={gridStyles}>
-          {/* Logo and Description */}
+          {/* Logo and Description - Centered on mobile */}
           <div style={logoColumnStyles}>
             <Link to="/" style={logoStyles}>
-              <span style={{ height: '0.75rem', width: '0.75rem', background: 'var(--primary)', borderRadius: '9999px' }}></span>
+            <span className="relative inline-flex">
+              <span className="h-4 w-4 bg-primary rounded-full animate-pulse-subtle"></span>
+              <span className="absolute -inset-0.5 bg-primary/20 rounded-full animate-ping"></span>
+            </span>
               <span>PillPal</span>
             </Link>
             <p style={descriptionStyles}>
               Your personal medication assistant. Simplifying medication management to help you stay healthy.
             </p>
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: isMobile ? 'center' : 'flex-start' }}>
               <Button 
                 variant="ghost" 
                 style={socialButtonStyles}
@@ -143,39 +158,42 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 style={sectionTitleStyles}>Quick Links</h3>
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link to={link.path} style={linkStyles}>
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Two column grid for Quick Links and Legal on mobile */}
+          <div style={linksGridStyles}>
+            {/* Quick Links */}
+            <div>
+              <h3 style={sectionTitleStyles}>Quick Links</h3>
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {quickLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link to={link.path} style={linkStyles}>
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Legal */}
-          <div>
-            <h3 style={sectionTitleStyles}>Legal</h3>
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {legalLinks.map((link) => (
-                <li key={link.name}>
-                  <Link to={link.path} style={linkStyles}>
-                    <span>{link.name}</span>
-                    <ExternalLink style={{ 
-                      height: '0.75rem', 
-                      width: '0.75rem', 
-                      display: 'inline-block',
-                      marginLeft: '0.25rem',
-                      verticalAlign: 'middle'
-                    }} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            {/* Legal */}
+            <div>
+              <h3 style={sectionTitleStyles}>Legal</h3>
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {legalLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link to={link.path} style={linkStyles}>
+                      <span>{link.name}</span>
+                      <ExternalLink style={{ 
+                        height: '0.75rem', 
+                        width: '0.75rem', 
+                        display: 'inline-block',
+                        marginLeft: '0.25rem',
+                        verticalAlign: 'middle'
+                      }} />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
