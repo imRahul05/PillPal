@@ -1,7 +1,5 @@
 // src/components/Index.jsx
 import { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import HeroSection from "@/components/HeroSection";
 import FeatureSection from "@/components/FeatureSection";
 import Navbar from "@/components/Navbar";
@@ -11,6 +9,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import TopButton from "../components/TopButton";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import CallToAction from "../components/CallToAction";
 
 const Index = () => {
   const { currentUser } = useAuth();
@@ -25,22 +24,16 @@ const Index = () => {
       return; 
     }
 
-    // Set a 3-second timer for the loader
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 3000);
-
-    // Scroll to top on mount
     window.scrollTo(0, 0);
 
-    // Handle scroll for TopButton visibility
     const handleScroll = () => {
       setIsVisible(window.scrollY > 300);
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup on unmount
     return () => {
       clearTimeout(timer);
       window.removeEventListener("scroll", handleScroll);
@@ -75,109 +68,8 @@ const Index = () => {
         <HeroSection />
         <FeatureSection />
 
-        {/* CTA Section */}
-        <section style={{ padding: "6rem 0", position: "relative" }}>
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              zIndex: 0,
-              background: "linear-gradient(to bottom, var(--bg-gray-50), var(--bg-gray-100))",
-            }}
-          />
-          <div
-            style={{
-              position: "relative",
-              zIndex: 10,
-              maxWidth: "80rem",
-              margin: "0 auto",
-              padding: "0 1.5rem",
-            }}
-          >
-            <div
-              style={{
-                background: isDarkMode ? "hsl(var(--card))" : "var(--bg-white)",
-                borderRadius: "1.5rem",
-                boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
-                overflow: "hidden",
-              }}
-            >
-              <div
-                style={{
-                  position: "relative",
-                  padding: "3rem 4rem",
-                  textAlign: "center",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <div style={{ position: "relative", zIndex: 10 }}>
-                  <h2
-                    style={{
-                      fontSize: "2.25rem",
-                      fontWeight: 600,
-                      marginBottom: "1rem",
-                      letterSpacing: "-0.025em",
-                    }}
-                  >
-                    Ready to simplify your medication routine?
-                  </h2>
-                  <p
-                    style={{
-                      fontSize: "1.25rem",
-                      color: "var(--text-gray-600)",
-                      marginBottom: "2rem",
-                      maxWidth: "42rem",
-                      margin: "0 auto",
-                    }}
-                  >
-                    Get started with PillPal today and experience the easiest way to manage your medications.
-                  </p>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "1rem",
-                      justifyContent: "center",
-                      padding: "0.8rem",
-                    }}
-                  >
-                    <Button
-                      style={{
-                        borderRadius: "9999px",
-                        height: "3.5rem",
-                        padding: "0 2rem",
-                        fontSize: "1rem",
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                      }}
-                    >
-                      Get Started{" "}
-                      <ArrowRight
-                        style={{
-                          marginLeft: "0.5rem",
-                          height: "1.25rem",
-                          width: "1.25rem",
-                        }}
-                      />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      style={{
-                        borderRadius: "9999px",
-                        height: "3.5rem",
-                        padding: "0 2rem",
-                        fontSize: "1rem",
-                      }}
-                    >
-                      Learn More
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+       <CallToAction/>
+       
       </main>
       <TopButton
         onClick={scrollToTop}

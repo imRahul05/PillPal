@@ -68,7 +68,7 @@ import {
           <div className="absolute bottom-1/3 -left-20 h-80 w-80 rounded-full bg-accent/5 blur-3xl"></div>
         </div>
   
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-2">
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-semibold mb-4 tracking-tight">

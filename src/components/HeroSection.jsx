@@ -35,7 +35,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-[var(--grid-pattern)] bg-center mask-[linear-gradient(to_bottom,black,transparent)]" />
       </div>
       
-      <div className="relative z-10 px-6 max-w-7xl mx-auto">
+      <div className="relative z-10 px-2 max-w-7xl mx-auto">
         <div className="flex flex-col items-center text-center mb-16">
           <div className="inline-flex items-center px-3 py-1 rounded-full border border-[hsl(var(--border))] gap-2 mb-8 bg-[hsl(var(--muted))]">
             <div className="flex items-center justify-center h-6 w-6 bg-[rgba(var(--primary-rgb),0.2)] rounded-full">
@@ -48,7 +48,7 @@ const HeroSection = () => {
           
           <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 bg-gradient-to-b from-[hsl(var(--foreground))] to-[hsl(var(--gray-700))] bg-clip-text text-transparent">
             Never Miss a Pill{!isMobile && <br />}
-            <span className="text-primary">Stay Healthy</span>
+            <span className="text-primary"> Stay Healthy</span>
           </h1>
           
           <p className="text-lg text-[hsl(var(--gray-600))] max-w-3xl mx-auto mb-10">
@@ -58,7 +58,7 @@ const HeroSection = () => {
           <div className={isMobile ? "flex-col" : "flex-row"} style={{ gap: '1rem', display: 'flex' }}>
             <Button 
               onClick={handleGetStarted}
-              className="rounded-full text-base px-8 h-14 shadow-md"
+              className="rounded-full text-base px-6 h-14 shadow-md"
             >
               Get Started
               <ArrowRight className="ml-2 h-5 w-5" />
