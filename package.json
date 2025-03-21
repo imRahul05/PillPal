@@ -66,6 +66,7 @@
     "react-hook-form": "^7.54.2",
     "react-resizable-panels": "^2.1.7",
     "react-router-dom": "^7.3.0",
+    "react-shimmer-effects": "^1.0.4",
     "recharts": "^2.15.1",
     "sonner": "^2.0.1",
     "styled-components": "^6.1.16",

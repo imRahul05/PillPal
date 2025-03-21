@@ -1,79 +1,176 @@
 // src/components/Index.jsx
-import { useEffect,useState } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import HeroSection from '@/components/HeroSection';
-import FeatureSection from '@/components/FeatureSection';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { useTheme } from '../contexts/ThemeContext';
-import TopButton from '../components/TopButton';
-import { useNavigate } from 'react-router-dom';
-import {useAuth} from '../contexts/AuthContext';
-
+import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import HeroSection from "@/components/HeroSection";
+import FeatureSection from "@/components/FeatureSection";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Loader from "@/components/Loader";
+import { useTheme } from "../contexts/ThemeContext";
+import TopButton from "../components/TopButton";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const Index = () => {
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
-  
+  const [isLoading, setIsLoading] = useState(true); // Fix: Set initial value to true
 
   useEffect(() => {
+    // Redirect to dashboard if user is logged in
     if (currentUser) {
-      navigate("/dashboard"); // Redirect to dashboard if user is logged in
+      navigate("/dashboard");
+      return; // Exit early to prevent setting the timer
     }
+
+    // Set a 3-second timer for the loader
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    // Scroll to top on mount
     window.scrollTo(0, 0);
+
+    // Handle scroll for TopButton visibility
     const handleScroll = () => {
       setIsVisible(window.scrollY > 300);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Cleanup on unmount
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [currentUser, navigate]);
+
+  // Move the loading check to the top of the render method
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          backgroundColor: isDarkMode ? "hsl(var(--background))" : "var(--bg-gray-50)",
+        }}
+      >
+        <Loader />
+      </div>
+    );
+  }
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  
+
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Navbar />
-      
       <main style={{ flex: 1 }}>
         <HeroSection />
         <FeatureSection />
 
         {/* CTA Section */}
-        <section style={{ padding: '6rem 0', position: 'relative' }}>
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 0,
-            background: 'linear-gradient(to bottom, var(--bg-gray-50), var(--bg-gray-100))'
-          }} />
-          <div style={{ position: 'relative', zIndex: 10, maxWidth: '80rem', margin: '0 auto', padding: '0 1.5rem' }}>
+        <section style={{ padding: "6rem 0", position: "relative" }}>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              zIndex: 0,
+              background: "linear-gradient(to bottom, var(--bg-gray-50), var(--bg-gray-100))",
+            }}
+          />
+          <div
+            style={{
+              position: "relative",
+              zIndex: 10,
+              maxWidth: "80rem",
+              margin: "0 auto",
+              padding: "0 1.5rem",
+            }}
+          >
             <div
               style={{
-                background: isDarkMode ? 'hsl(var(--card))' : 'var(--bg-white)', // Conditional background
-                borderRadius: '1.5rem',
-                boxShadow: '0 0 20px rgba(0, 0, 0, 0.1)',
-                overflow: 'hidden'
+                background: isDarkMode ? "hsl(var(--card))" : "var(--bg-white)",
+                borderRadius: "1.5rem",
+                boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
+                overflow: "hidden",
               }}
             >
-              <div style={{ position: 'relative', padding: '3rem 4rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ position: 'relative', zIndex: 10 }}>
-                  <h2 style={{ fontSize: '2.25rem', fontWeight: 600, marginBottom: '1rem', letterSpacing: '-0.025em' }}>
+              <div
+                style={{
+                  position: "relative",
+                  padding: "3rem 4rem",
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <div style={{ position: "relative", zIndex: 10 }}>
+                  <h2
+                    style={{
+                      fontSize: "2.25rem",
+                      fontWeight: 600,
+                      marginBottom: "1rem",
+                      letterSpacing: "-0.025em",
+                    }}
+                  >
                     Ready to simplify your medication routine?
                   </h2>
-                  <p style={{ fontSize: '1.25rem', color: 'var(--text-gray-600)', marginBottom: '2rem', maxWidth: '42rem', margin: '0 auto' }}>
+                  <p
+                    style={{
+                      fontSize: "1.25rem",
+                      color: "var(--text-gray-600)",
+                      marginBottom: "2rem",
+                      maxWidth: "42rem",
+                      margin: "0 auto",
+                    }}
+                  >
                     Get started with PillPal today and experience the easiest way to manage your medications.
                   </p>
-                  
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', justifyContent: 'center' ,padding:'0.8rem'}}>
-                    <Button style={{ borderRadius: '9999px', height: '3.5rem', padding: '0 2rem', fontSize: '1rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
-                      Get Started <ArrowRight style={{ marginLeft: '0.5rem', height: '1.25rem', width: '1.25rem' }} />
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "1rem",
+                      justifyContent: "center",
+                      padding: "0.8rem",
+                    }}
+                  >
+                    <Button
+                      style={{
+                        borderRadius: "9999px",
+                        height: "3.5rem",
+                        padding: "0 2rem",
+                        fontSize: "1rem",
+                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      Get Started{" "}
+                      <ArrowRight
+                        style={{
+                          marginLeft: "0.5rem",
+                          height: "1.25rem",
+                          width: "1.25rem",
+                        }}
+                      />
                     </Button>
-                    <Button variant="outline" style={{ borderRadius: '9999px', height: '3.5rem', padding: '0 2rem', fontSize: '1rem' }}>
+                    <Button
+                      variant="outline"
+                      style={{
+                        borderRadius: "9999px",
+                        height: "3.5rem",
+                        padding: "0 2rem",
+                        fontSize: "1rem",
+                      }}
+                    >
                       Learn More
                     </Button>
                   </div>
@@ -83,8 +180,12 @@ const Index = () => {
           </div>
         </section>
       </main>
-      <TopButton onClick={scrollToTop}
-      className={`transition-opacity ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}/>
+      <TopButton
+        onClick={scrollToTop}
+        className={`transition-opacity ${
+          isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      />
       <Footer />
     </div>
   );
