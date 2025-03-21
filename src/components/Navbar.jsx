@@ -58,16 +58,6 @@ const Navbar = () => {
     }
   };
 
-  // const navItems = [
-  //   { name: 'Home', path: '/' },
-  //   { name: 'Dashboard', path: '/dashboard', protected: true },
-  //   { name: 'Medications', path: '/medications', protected: true },
-  //   { name: 'Reports', path: '/reports', protected: true }, // Added Reports
-  //   { name: 'Profile', path: '/profile', protected: true },
-  // ];
-
-  // const filteredNavItems = navItems.filter(item => 
-  //   !item.protected || (item.protected && currentUser));
     const navItems = [
     { name: 'Home', path: '/', hideWhenLoggedIn: true },
     { name: 'Dashboard', path: '/dashboard', protected: true },
@@ -109,8 +99,8 @@ const Navbar = () => {
         )}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link
-            to="/"
+                   <Link
+            to={currentUser ? "/dashboard" : "/"}
             className="text-xl font-semibold text-primary flex items-center gap-2 transition-transform hover:scale-105"
           >
             <span className="relative inline-flex">
