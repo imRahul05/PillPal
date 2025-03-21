@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState ,useEffect} from "react";
+import { Link,useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,8 +13,14 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { resetPassword } = useAuth();
+  const { resetPassword ,currentUser} = useAuth();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (currentUser) {
+      navigate("/dashboard");
+    }
+  }, [currentUser, navigate]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
