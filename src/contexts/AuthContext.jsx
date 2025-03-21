@@ -1,12 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {  
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut, 
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
   onAuthStateChanged,
   updateProfile,
   fetchSignInMethodsForEmail,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useToast } from "@/components/ui/use-toast";
@@ -54,7 +54,11 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password, name) => {
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       await updateProfile(result.user, { displayName: name });
       toast({
         title: "Account Created",
@@ -107,7 +111,8 @@ export const AuthProvider = ({ children }) => {
       });
     } catch (error) {
       console.error("Password reset error:", error);
-      let errorMessage = "Failed to send password reset email. Please try again.";
+      let errorMessage =
+        "Failed to send password reset email. Please try again.";
       if (error.code === "auth/user-not-found") {
         errorMessage = "No account found with that email address.";
       } else if (error.code === "auth/invalid-email") {
@@ -122,10 +127,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
   return (
-    <AuthContext.Provider value={{ currentUser, isLoading, login, signup, logout,resetPassword }}>
+    <AuthContext.Provider
+      value={{ currentUser, isLoading, login, signup, logout, resetPassword }}
+    >
       {!isLoading && children}
     </AuthContext.Provider>
   );
 };
-
-

@@ -17,13 +17,12 @@ const Index = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Fix: Set initial value to true
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Redirect to dashboard if user is logged in
     if (currentUser) {
       navigate("/dashboard");
-      return; // Exit early to prevent setting the timer
+      return; 
     }
 
     // Set a 3-second timer for the loader

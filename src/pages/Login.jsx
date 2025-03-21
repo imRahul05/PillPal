@@ -5,7 +5,14 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Mail, Lock, ArrowRight, User } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -22,7 +29,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Only redirect if there’s no error and the user is logged in
     if (currentUser && !error) {
       setLoadingStates({
         isLoadingRegular: false,
@@ -30,7 +36,6 @@ const Login = () => {
       });
       navigate("/dashboard");
     }
-    // window.scrollTo(0, 0);
 
     return () => {
       setLoadingStates({
@@ -60,7 +65,6 @@ const Login = () => {
 
     try {
       await login("demo@example.com", "demo@example.com");
-      // No need to navigate here; useEffect will handle the redirect
     } catch (err) {
       console.error("Guest login error:", err);
       setError("Failed to sign in as a guest. Please try again.");
@@ -76,9 +80,7 @@ const Login = () => {
           <Card className="border-gray-200 dark:border-gray-800 shadow-glass">
             <CardHeader className="space-y-1 text-center">
               <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
-              <CardDescription>
-                Sign in to your PillPal account
-              </CardDescription>
+              <CardDescription>Sign in to your PillPal account</CardDescription>
             </CardHeader>
             <CardContent>
               {error && (
@@ -130,7 +132,10 @@ const Login = () => {
                 <Button
                   type="submit"
                   className="w-full rounded-lg"
-                  disabled={loadingStates.isLoadingRegular || loadingStates.isLoadingGuest}
+                  disabled={
+                    loadingStates.isLoadingRegular ||
+                    loadingStates.isLoadingGuest
+                  }
                 >
                   {loadingStates.isLoadingRegular ? "Signing in..." : "Sign In"}
                 </Button>
@@ -139,10 +144,15 @@ const Login = () => {
                   variant="outline"
                   className="w-full rounded-lg flex items-center justify-center gap-2"
                   onClick={handleGuestLogin}
-                  disabled={loadingStates.isLoadingRegular || loadingStates.isLoadingGuest}
+                  disabled={
+                    loadingStates.isLoadingRegular ||
+                    loadingStates.isLoadingGuest
+                  }
                 >
                   <User className="h-4 w-4" />
-                  {loadingStates.isLoadingGuest ? "Signing in..." : "Sign in as a Guest"}
+                  {loadingStates.isLoadingGuest
+                    ? "Signing in..."
+                    : "Sign in as a Guest"}
                 </Button>
               </form>
             </CardContent>

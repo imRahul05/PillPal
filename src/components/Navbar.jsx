@@ -1,23 +1,23 @@
 // src/components/Navbar.jsx
-import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Sun, Moon, LogOut, Bell } from 'lucide-react';
-import { cn } from '@/lib/utils'; // Add this import
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, Sun, Moon, LogOut, Bell } from "lucide-react";
+import { cn } from "@/lib/utils"; // Add this import
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import NotificationsDropdown from '@/components/NotificationsDropdown';
-import NotificationAlert from '@/components/NotificationAlert';
-import { useMedicationNotifications } from '@/hooks/useMedicationNotifications';
-import '../index.css';
-import { useTheme } from '../contexts/ThemeContext';
+} from "@/components/ui/dropdown-menu";
+import NotificationsDropdown from "@/components/NotificationsDropdown";
+import NotificationAlert from "@/components/NotificationAlert";
+import { useMedicationNotifications } from "@/hooks/useMedicationNotifications";
+import "../index.css";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,59 +33,59 @@ const Navbar = () => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
- 
+
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      console.error('Failed to log out', error);
+      console.error("Failed to log out", error);
     }
   };
 
-    const navItems = [
-    { name: 'Home', path: '/', hideWhenLoggedIn: true },
-    { name: 'Dashboard', path: '/dashboard', protected: true },
-    { name: 'Medications', path: '/medications', protected: true },
-    { name: 'Reports', path: '/reports', protected: true },
-    { name: 'Profile', path: '/profile', protected: true },
+  const navItems = [
+    { name: "Home", path: "/", hideWhenLoggedIn: true },
+    { name: "Dashboard", path: "/dashboard", protected: true },
+    { name: "Medications", path: "/medications", protected: true },
+    { name: "Reports", path: "/reports", protected: true },
+    { name: "Profile", path: "/profile", protected: true },
   ];
-  
-  const filteredNavItems = navItems.filter(item => {
+
+  const filteredNavItems = navItems.filter((item) => {
     if (currentUser && item.hideWhenLoggedIn) {
       return false;
     }
     if (item.protected) {
       return currentUser ? true : false;
     }
-    
+
     return true;
   });
 
   const getInitials = () => {
     if (currentUser?.displayName) {
       return currentUser.displayName
-        .split(' ')
-        .map(n => n[0])
-        .join('')
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
         .toUpperCase();
     }
-    return 'U';
+    return "U";
   };
 
   return (
@@ -94,12 +94,12 @@ const Navbar = () => {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 py-4",
           isScrolled
-            ? 'bg-white/80 dark:bg-[hsl(var(--background))/0.8] backdrop-blur-lg border-b border-[hsl(var(--border))] shadow-sm'
-            : 'bg-transparent'
+            ? "bg-white/80 dark:bg-[hsl(var(--background))/0.8] backdrop-blur-lg border-b border-[hsl(var(--border))] shadow-sm"
+            : "bg-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-                   <Link
+          <Link
             to={currentUser ? "/dashboard" : "/"}
             className="text-xl font-semibold text-primary flex items-center gap-2 transition-transform hover:scale-105"
           >
@@ -141,7 +141,11 @@ const Navbar = () => {
               className="rounded-full hover:bg-accent dark:hover:bg-accent/70"
               onClick={toggleDarkMode}
             >
-              {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {isDarkMode ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
             </Button>
 
             {currentUser && <NotificationsDropdown />}
@@ -150,36 +154,49 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Avatar className="h-9 w-9 cursor-pointer">
-                    <AvatarImage src={currentUser.photoURL} alt={currentUser.displayName} />
+                    <AvatarImage
+                      src={currentUser.photoURL}
+                      alt={currentUser.displayName}
+                    />
                     <AvatarFallback className="bg-primary text-primary-foreground">
                       {getInitials()}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent  align="end"
-                        className={cn(
-                          "w-50 bg-[hsl(var(--card))] border-[hsl(var(--border))] shadow-lg z-[60]",
-                          "text-[hsl(var(--foreground))]" 
-                        )}>
+                <DropdownMenuContent
+                  align="end"
+                  className={cn(
+                    "w-50 bg-[hsl(var(--card))] border-[hsl(var(--border))] shadow-lg z-[60]",
+                    "text-[hsl(var(--foreground))]"
+                  )}
+                >
                   <div className="flex items-center justify-start gap-2 p-2">
                     <div className="flex flex-col space-y-1 leading-none">
                       {currentUser.displayName && (
                         <p className="font-medium">{currentUser.displayName}</p>
                       )}
                       {currentUser.email && (
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{currentUser.email}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {currentUser.email}
+                        </p>
                       )}
                     </div>
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/profile" className="cursor-pointer">Profile</Link>
+                    <Link to="/profile" className="cursor-pointer">
+                      Profile
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/dashboard" className="cursor-pointer">Dashboard</Link>
+                    <Link to="/dashboard" className="cursor-pointer">
+                      Dashboard
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/reports" className="cursor-pointer">Reports</Link>
+                    <Link to="/reports" className="cursor-pointer">
+                      Reports
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
@@ -196,13 +213,13 @@ const Navbar = () => {
                 <Button
                   variant="ghost"
                   className="rounded-full hover:bg-accent dark:hover:bg-accent/70"
-                  onClick={() => navigate('/login')}
+                  onClick={() => navigate("/login")}
                 >
                   Sign In
                 </Button>
                 <Button
                   className="rounded-full shadow-glass-sm"
-                  onClick={() => navigate('/signup')}
+                  onClick={() => navigate("/signup")}
                 >
                   Sign Up
                 </Button>
@@ -218,7 +235,11 @@ const Navbar = () => {
               className="rounded-full hover:bg-accent dark:hover:bg-accent/70"
               onClick={toggleDarkMode}
             >
-              {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {isDarkMode ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
             </Button>
 
             {currentUser && <NotificationsDropdown />}
@@ -229,7 +250,11 @@ const Navbar = () => {
               className="rounded-full hover:bg-accent dark:hover:bg-accent/70"
               onClick={() => setIsOpen(!isOpen)}
             >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </div>
@@ -248,29 +273,32 @@ const Navbar = () => {
                 to={item.path}
                 className={cn(
                   "text-2xl font-medium py-2 transition-colors animate-slide-in-left",
-                  location.pathname === item.path ? "text-primary" : "text-gray-600 dark:text-gray-400"
+                  location.pathname === item.path
+                    ? "text-primary"
+                    : "text-gray-600 dark:text-gray-400"
                 )}
-                style={{ animationDelay: `${filteredNavItems.indexOf(item) * 0.05}s` }}
+                style={{
+                  animationDelay: `${filteredNavItems.indexOf(item) * 0.05}s`,
+                }}
               >
                 {item.name}
               </Link>
             ))}
 
-            {currentUser ? (       
+            {currentUser ? (
               <Button
                 onClick={handleLogout}
                 className="rounded-full w-full shadow-glass-sm animate-slide-in-up"
                 variant="destructive"
                 style={{ animationDelay: "0.3s" }}
               >
-
-                <LogOut className="mr-2 h-5 w-5"  />
-                   Logout
+                <LogOut className="mr-2 h-5 w-5" />
+                Logout
               </Button>
             ) : (
               <div className="flex flex-col gap-3 pt-4">
                 <Button
-                  onClick={() => navigate('/login')}
+                  onClick={() => navigate("/login")}
                   className="rounded-full w-full shadow-glass-sm animate-slide-in-up"
                   variant="outline"
                   style={{ animationDelay: "0.3s" }}
@@ -278,7 +306,7 @@ const Navbar = () => {
                   Sign In
                 </Button>
                 <Button
-                  onClick={() => navigate('/signup')}
+                  onClick={() => navigate("/signup")}
                   className="rounded-full w-full shadow-glass-sm animate-slide-in-up"
                   style={{ animationDelay: "0.4s" }}
                 >
@@ -292,10 +320,7 @@ const Navbar = () => {
 
       {/* Active Medication Alert */}
       {activeAlert && (
-        <NotificationAlert
-          notification={activeAlert}
-          onClose={() => {}}
-        />
+        <NotificationAlert notification={activeAlert} onClose={() => {}} />
       )}
     </>
   );

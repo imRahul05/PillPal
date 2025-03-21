@@ -1,17 +1,23 @@
-
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Mail, Lock, User } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const Signup = () => {
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +26,6 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { signup } = useAuth();
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (currentUser) {
@@ -59,7 +64,9 @@ const Signup = () => {
         <div className="w-full max-w-md">
           <Card className="border-gray-200 dark:border-gray-800 shadow-glass">
             <CardHeader className="space-y-1 text-center">
-              <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
+              <CardTitle className="text-2xl font-bold">
+                Create an account
+              </CardTitle>
               <CardDescription>
                 Sign up for PillPal to start managing your medications
               </CardDescription>
@@ -131,8 +138,8 @@ const Signup = () => {
                     />
                   </div>
                 </div>
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full rounded-lg"
                   disabled={isLoading}
                 >
@@ -143,8 +150,8 @@ const Signup = () => {
             <CardFooter className="flex flex-col space-y-4">
               <div className="text-center text-sm">
                 Already have an account?{" "}
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="text-primary hover:underline underline-offset-4 font-medium"
                 >
                   Sign in

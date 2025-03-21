@@ -1,10 +1,17 @@
-import { useState ,useEffect} from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Mail, ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -13,7 +20,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { resetPassword ,currentUser} = useAuth();
+  const { resetPassword, currentUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,9 +48,12 @@ const ForgotPassword = () => {
         <div className="w-full max-w-md">
           <Card className="border-gray-200 dark:border-gray-800 shadow-glass">
             <CardHeader className="space-y-1 text-center">
-              <CardTitle className="text-2xl font-bold">Reset your password</CardTitle>
+              <CardTitle className="text-2xl font-bold">
+                Reset your password
+              </CardTitle>
               <CardDescription>
-                Enter your email address and we'll send you a link to reset your password
+                Enter your email address and we'll send you a link to reset your
+                password
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -51,11 +61,15 @@ const ForgotPassword = () => {
                 <div className="bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 p-4 rounded-md text-sm space-y-3">
                   <p className="font-medium">Reset link sent!</p>
                   <p>
-                    Please check your email for instructions on how to reset your password.
-                    If you don't see it within a few minutes, check your spam folder.
+                    Please check your email for instructions on how to reset
+                    your password. If you don't see it within a few minutes,
+                    check your spam folder.
                   </p>
                   <p>
-                    <Link to="/login" className="text-primary hover:underline flex items-center gap-1 mt-2">
+                    <Link
+                      to="/login"
+                      className="text-primary hover:underline flex items-center gap-1 mt-2"
+                    >
                       <ArrowLeft className="h-4 w-4" />
                       Back to login
                     </Link>
@@ -78,8 +92,8 @@ const ForgotPassword = () => {
                       />
                     </div>
                   </div>
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full"
                     disabled={isSubmitting}
                   >
@@ -91,8 +105,8 @@ const ForgotPassword = () => {
             <CardFooter className="flex flex-col space-y-4">
               <div className="text-center text-sm">
                 Remember your password?{" "}
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="text-primary hover:underline underline-offset-4 font-medium"
                 >
                   Back to login
