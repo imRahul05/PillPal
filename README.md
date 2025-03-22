@@ -126,17 +126,7 @@ npm run dev
    - Manage medication list as needed
    - View adherence reports for insights
 
-## 🔮 Future Features
 
-- Medication interaction warnings
-- Doctor appointment integration
-- Medication image recognition
-- Family member/caregiver access
-- Export reports for healthcare providers
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 👥 Contributors
 
