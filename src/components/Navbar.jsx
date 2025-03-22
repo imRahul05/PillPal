@@ -263,7 +263,7 @@ const Navbar = () => {
         <div
           className={cn(
             "md:hidden fixed inset-0 bg-[hsl(var(--background))/0.95] backdrop-blur-sm z-40 transition-all duration-300 ease-in-out pt-20",
-            isOpen || isScrolled ? "opacity-800" : "opacity-0 pointer-events-none"
+            isOpen ? "opacity-800" : "opacity-0 pointer-events-none"
           )}
         >
           <div className="flex flex-col space-y-6 p-8">
