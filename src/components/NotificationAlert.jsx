@@ -6,7 +6,7 @@ import { useMedications } from '@/hooks/useMedications';
 const NotificationAlert = ({ notification, onClose }) => {
     const [timeLeft, setTimeLeft] = useState(30);
     const { markMedicationAsTaken } = useMedications();
-
+    
     useEffect(() => {
         const timer = setInterval(() => {
             setTimeLeft((prev) => {
@@ -18,15 +18,15 @@ const NotificationAlert = ({ notification, onClose }) => {
                 return prev - 1;
             });
         }, 1000);
-
+        
         return () => clearInterval(timer);
     }, [onClose]);
-
+    
     const handleTakeMedication = async () => {
         await markMedicationAsTaken(notification.medicationId);
         onClose();
     };
-
+    
     return (
         <div className="fixed top-20 right-4 z-50 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-4 animate-slide-in-right">
             <div className="flex items-center gap-3 mb-3">
@@ -56,5 +56,4 @@ const NotificationAlert = ({ notification, onClose }) => {
         </div>
     );
 };
-
 export default NotificationAlert;

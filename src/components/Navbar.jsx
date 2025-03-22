@@ -92,7 +92,10 @@ const Navbar = () => {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 py-4"
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-6 py-4",
+          isScrolled
+            ? "bg-white/80 dark:bg-[hsl(var(--background))/0.8] backdrop-blur-lg border-b border-[hsl(var(--border))] shadow-sm"
+            : "bg-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -260,7 +263,7 @@ const Navbar = () => {
         <div
           className={cn(
             "md:hidden fixed inset-0 bg-[hsl(var(--background))/0.95] backdrop-blur-sm z-40 transition-all duration-300 ease-in-out pt-20",
-            isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            isOpen || isScrolled ? "opacity-800" : "opacity-0 pointer-events-none"
           )}
         >
           <div className="flex flex-col space-y-6 p-8">

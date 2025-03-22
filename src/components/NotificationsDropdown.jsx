@@ -76,8 +76,8 @@ const NotificationsDropdown = () => {
       <DropdownMenuContent
         align="end"
         className={cn(
-          "w-80 bg-[hsl(var(--card))] border-[hsl(var(--border))] shadow-lg z-[60]", // Added background, border, shadow, and z-index
-          "text-[hsl(var(--foreground))]" // Ensure text color adapts to theme
+          "w-80 bg-[hsl(var(--card))] border-[hsl(var(--border))] shadow-lg z-[60]", 
+          "text-[hsl(var(--foreground))]"
         )}
       >
         <DropdownMenuLabel className="text-[hsl(var(--foreground))]">Notifications</DropdownMenuLabel>
@@ -127,7 +127,7 @@ const NotificationsDropdown = () => {
             <button
               className={cn(
                 "block w-full text-left py-3 px-4 text-sm text-[hsl(var(--accent))] hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))]",
-                notifications.length === 0 && "opacity-50 cursor-not-allowed" // Disable if no notifications
+                notifications.length === 0 && "opacity-50 cursor-not-allowed"
               )}
               disabled={notifications.length === 0}
             >

@@ -4,9 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { cn } from '@/lib/utils';
 import Renewals from './Renewals';
 import DraggableMedicationList from '@/components/dashboard/DraggableMedicationList';
+import { useState, useEffect } from 'react';
 
 const MainContent = ({ 
-  activeMedications, 
+  activeMedications: initialMedications, 
   takenToday, 
   medsLoading, 
   markMedicationAsTaken, 
@@ -15,6 +16,20 @@ const MainContent = ({
   navigate,
   upcomingRenewals
 }) => {
+  // State to manage local medication order
+  const [medications, setMedications] = useState([]);
+
+  // Initialize medications from props
+  useEffect(() => {
+    setMedications(initialMedications);
+  }, [initialMedications]);
+
+
+  const handleReorder = (newOrder) => {
+    setMedications(newOrder);
+ 
+  };
+
   // Function to get status-specific styles
   const getStatusStyles = (medication) => {
     if (medication.taken) {
@@ -63,9 +78,9 @@ const MainContent = ({
       {/* Status Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          { name: "Today's Medications", count: `${takenToday}/${activeMedications.length}`, color: "bg-blue-500", icon: Calendar },
+          { name: "Today's Medications", count: `${takenToday}/${medications.length}`, color: "bg-blue-500", icon: Calendar },
           { name: "Taken Today", count: takenToday.toString(), color: "bg-green-500", icon: Check },
-          { name: "Missed", count: (activeMedications.filter(med => med.missed).length).toString(), color: "bg-red-500", icon: X }
+          { name: "Missed", count: (medications.filter(med => med.missed).length).toString(), color: "bg-red-500", icon: X }
         ].map((stat, index) => (
           <Card key={index} className="border-gray-200 dark:border-gray-800 shadow-glass-sm">
             <CardContent className="p-6 flex items-center gap-4">
@@ -85,14 +100,16 @@ const MainContent = ({
       <Card className="border-gray-200 dark:border-gray-800 shadow-glass-sm">
         <CardHeader>
           <CardTitle>Today's Medications</CardTitle>
-          <CardDescription>Your medication schedule for today</CardDescription>
+          <CardDescription>
+            Drag to reorder and prioritize your medications
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {medsLoading ? (
             <div className="flex justify-center items-center h-40">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
             </div>
-          ) : activeMedications.length === 0 ? (
+          ) : medications.length === 0 ? (
             <div className="text-center py-8">
               <Clock className="h-10 w-10 text-gray-400 mx-auto mb-3" />
               <h3 className="text-lg font-medium mb-2">No medications scheduled</h3>
@@ -107,76 +124,12 @@ const MainContent = ({
               </Button>
             </div>
           ) : (
-            <div className="space-y-3">
-              {activeMedications.map((med) => {
-                const styles = getStatusStyles(med);
-                return (
-                  <div 
-                    key={med.id}
-                    className={cn(
-                      "p-4 rounded-xl border flex flex-col sm:flex-row sm:items-center gap-4 transition-all",
-                      styles.bg, styles.border
-                    )}
-                  >
-                    <div className={cn("h-10 w-10 rounded-lg flex items-center justify-center", styles.buttonBg, "text-white")}>
-                      <styles.icon className="h-5 w-5" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                        <div>
-                          <h4 className="font-medium">{med.name} {med.dosage}</h4>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">{med.schedule}</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className={cn("text-sm font-medium", styles.text)}>{med.time || 'Anytime'}</span>
-                          <div className="flex space-x-1">
-                            {!med.taken && !med.missed && (
-                              <>
-                                <Button 
-                                  size="sm" 
-                                  variant="outline" 
-                                  className="h-8 rounded-lg"
-                                  onClick={() => markMedicationAsMissed(med.id)}
-                                >
-                                  Skip
-                                </Button>
-                                <Button 
-                                  size="sm" 
-                                  className="h-8 rounded-lg"
-                                  onClick={() => markMedicationAsTaken(med.id)}
-                                >
-                                  Take
-                                </Button>
-                              </>
-                            )}
-                            {med.taken && (
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="h-8 rounded-lg"
-                                onClick={() => markMedicationAsMissed(med.id)}
-                              >
-                                Mark Missed
-                              </Button>
-                            )}
-                            {med.missed && (
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="h-8 rounded-lg"
-                                onClick={() => markMedicationAsTaken(med.id)}
-                              >
-                                Take Late
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <DraggableMedicationList
+              medications={medications}
+              onReorder={handleReorder}
+              markMedicationAsTaken={markMedicationAsTaken}
+              markMedicationAsMissed={markMedicationAsMissed}
+            />
           )}
         </CardContent>
       </Card>
