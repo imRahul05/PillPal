@@ -26,7 +26,7 @@ const Index = () => {
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 2000);
     window.scrollTo(0, 0);
 
     const handleScroll = () => {

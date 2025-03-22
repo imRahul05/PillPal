@@ -103,7 +103,7 @@ const Dashboard = () => {
       <Navbar />
 
       <main className="flex-1 pt-20 pb-12">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-2 ">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Sidebar */}
             <SideBar
