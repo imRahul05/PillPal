@@ -1,7 +1,7 @@
 
 # 💊 PillPal: Medication Management Made Simple
 
-![PillPal](public/placeholder.svg)
+![PillPal](public/logo.png)
 
 ## Overview
 
