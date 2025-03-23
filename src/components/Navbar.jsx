@@ -63,7 +63,7 @@ const Navbar = () => {
     { name: "Dashboard", path: "/dashboard", protected: true },
     { name: "Medications", path: "/medications", protected: true },
     { name: "Reports", path: "/reports", protected: true },
-    // { name: "Profile", path: "/profile", protected: true },
+     { name: "Pill Pal AI", path: "/ai-assistant", protected: true },
   ];
 
   const filteredNavItems = navItems.filter((item) => {

@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Medications from "./pages/Medications";
 import ReportsPage from "./pages/Reports";
 import Profile from "./pages/Profile";
+import AIAssistant from "./pages/AIAssistant";
 import NotFound from "./pages/NotFound";
 import ForgotPasswordPage from "./pages/ForgotPassword";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -60,6 +61,12 @@ const App = () => (
                     <ReportsPage />
                   </ProtectedRoute>
                 }
+              />
+              <Route
+               path="/ai-assistant"
+               element={<ProtectedRoute>
+                <AIAssistant/>
+              </ProtectedRoute>}
               />
               <Route path="*" element={<NotFound />} />
             </Routes>

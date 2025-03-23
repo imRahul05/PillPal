@@ -8,7 +8,7 @@ import MedicationForm from "@/components/MedicationForm";
 import SideBar from "@/components/dashboard/SideBar";
 import MainContent from "@/components/dashboard/MainContent";
 import { useToast } from "@/components/ui/use-toast";
-
+import  AIInsightsCard from "@/components/AIInsightsCard";
 const Dashboard = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
