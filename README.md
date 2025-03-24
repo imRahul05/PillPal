@@ -65,7 +65,7 @@ src/
 ## Installation & Getting Started
 
 ### Prerequisites
-- Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js & npm installed - [install with npm]
 
 ### Installation
 
@@ -111,7 +111,7 @@ npm run dev
 ## Credentials
 Demo User:
 - Email: demo@example.com
-- Password: demouser123
+- Password: demo@example.com
 
 ## APIs Used
 - Firebase Authentication API
@@ -128,7 +128,7 @@ Demo User:
 - **Routing**: React Router
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui component library
-- **State Management**: React Context API and React Query
+- **State Management**: React Context API 
 - **Database**: Firebase Realtime Database
 - **Authentication**: Firebase Authentication
 
