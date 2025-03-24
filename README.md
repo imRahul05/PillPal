@@ -1,12 +1,35 @@
+![PillPal](public/logo.png)
 
- ![PillPal](public/logo.png) #  PillPal: Medication Management Made Simple
+# PillPal: Medication Management Made Simple
 
-
-## Overview
-
+## Introduction
 PillPal is a comprehensive medication management application designed to help users track their medications, receive timely reminders, and maintain better medication adherence. With an intuitive interface and powerful features, PillPal makes it easy to never miss a dose again.
 
-## 🌟 Core Features
+## Project Type
+Fullstack
+
+## Deployed App
+Frontend: Vercel 
+Backend: Firebase
+Database: Firebase Realtime Database
+
+## Directory Structure
+```
+src/
+├── components/      # Reusable UI components
+├── contexts/        # React contexts for state management
+├── hooks/           # Custom React hooks
+├── lib/             # Utility functions and configuration
+├── pages/           # Main application pages
+```
+
+## Video Walkthrough of the project
+[Watch the project demonstration](https://www.youtube.com/watch?v=g_mDYyH2ofM&feature=youtu.be)
+
+## Video Walkthrough of the codebase
+*Coming soon*
+
+## Features
 
 ### Medication Tracking
 - **Add & Manage Medications**: Easily add and track all your prescriptions in one place
@@ -33,59 +56,20 @@ PillPal is a comprehensive medication management application designed to help us
 - **Profile Management**: Update personal information and preferences
 - **Data Privacy**: Your health information stays private and secure
 
-## 📱 Application Routes
+## Design Decisions & Assumptions
+- Mobile-first design approach for better accessibility
+- Firebase used for real-time updates and notifications
+- User data is stored securely and privately
+- Simplified medication input process to improve user experience
 
-| Route | Description | Access |
-|-------|-------------|--------|
-| `/` | Landing page with app introduction and features | Public |
-| `/login` | User login screen | Public |
-| `/signup` | New user registration | Public |
-| `/forgot-password` | Password recovery | Public |
-| `/dashboard` | Main user dashboard with medication overview and stats | Protected |
-| `/medications` | Complete list of user medications with management options | Protected |
-| `/profile` | User profile management | Protected |
-| `/reports` | Detailed medication adherence and usage reports | Protected |
-| `/not-found` | 404 error page | Public |
-
-## 🛡️ Authentication
-
-PillPal uses Firebase Authentication to provide secure user access:
-- Email/password authentication
-- Secure protected routes for authenticated users
-- Session management
-
-## 🏗️ Project Structure
-
-```
-src/
-├── components/      # Reusable UI components
-├── contexts/        # React contexts for state management
-├── hooks/           # Custom React hooks
-├── lib/             # Utility functions and configuration
-├── pages/           # Main application pages
-```
-
-## 💻 Technology Stack
-
-PillPal is built with modern web technologies:
-
-- **Frontend Framework**: React with TypeScript
-- **Routing**: React Router
-- **Styling**: Tailwind CSS
-- **UI Components**: shadcn/ui component library
-- **State Management**: React Context API and React Query
-- **Database**: Firebase Realtime Database
-- **Authentication**: Firebase Authentication
-
-
-## 🚀 Getting Started
+## Installation & Getting Started
 
 ### Prerequisites
 - Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 ### Installation
 
-```sh
+```bash
 # Step 1: Clone the repository
 git clone https://github.com/imRahul05/PillPal.git
 
@@ -95,22 +79,21 @@ cd PillPal
 # Step 3: Install dependencies
 npm i
 
-#step 4: Add the firebase API Keys in .env 
+# Step 4: Add the firebase API Keys in .env 
 apiKey: FIREBASE_API_KEY,
 authDomain: FIREBASE_AUTH_DOMAIN,
 databaseURL: FIREBASE_DATABASE_URL,
-projectId:FIREBASE_PROJECT_ID,
-storageBucket:FIREBASE_STORAGE_BUCKET,
-messagingSenderId:FIREBASE_MESSAGING_SENDER_ID,
+projectId: FIREBASE_PROJECT_ID,
+storageBucket: FIREBASE_STORAGE_BUCKET,
+messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
 appId: FIREBASE_APP_ID,
-measurementId:FIREBASE_MEASUREMENT_ID
+measurementId: FIREBASE_MEASUREMENT_ID
 
-# Step 4: Start the development server
+# Step 5: Start the development server
 npm run dev
 ```
 
-## 📚 User Flow
-
+## Usage
 1. **New User**:
    - Visit the landing page
    - Click "Get Started"
@@ -125,12 +108,48 @@ npm run dev
    - Manage medication list as needed
    - View adherence reports for insights
 
+## Credentials
+Demo User:
+- Email: demo@example.com
+- Password: demouser123
 
+## APIs Used
+- Firebase Authentication API
+- Firebase Realtime Database API
 
-## 👥 Contributors
+## API Endpoints
+- `/api/medications` - Manage user medications
+- `/api/users` - User profile management
+- `/api/reminders` - Medication reminder settings
+- `/api/reports` - Generate adherence reports
 
-Developed with ❤️ by the Rahul.
+## Technology Stack
+- **Frontend Framework**: React with JavaScript
+- **Routing**: React Router
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui component library
+- **State Management**: React Context API and React Query
+- **Database**: Firebase Realtime Database
+- **Authentication**: Firebase Authentication
+
+## Application Routes
+
+| Route | Description | Access |
+|-------|-------------|--------|
+| `/` | Landing page with app introduction and features | Public |
+| `/login` | User login screen | Public |
+| `/signup` | New user registration | Public |
+| `/forgot-password` | Password recovery | Public |
+| `/dashboard` | Main user dashboard with medication overview and stats | Protected |
+| `/medications` | Complete list of user medications with management options | Protected |
+| `/profile` | User profile management | Protected |
+| `/reports` | Detailed medication adherence and usage reports | Protected |
+| `/not-found` | 404 error page | Public |
 
 ---
 
+Developed with ❤️ by Rahul.
+
 For support or questions, please contact rahulkumar20000516@gmail.com
+
+
