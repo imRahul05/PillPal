@@ -27,7 +27,7 @@ src/
 [Watch the project demonstration](https://www.youtube.com/watch?v=g_mDYyH2ofM&feature=youtu.be)
 
 ## Video Walkthrough of the codebase
-*Coming soon*
+[Watch the project demonstration](https://drive.google.com/drive/folders/1M0TBpq7FVTV45XnfUFhsYXusb67IXPvj?usp=sharing)
 
 ## Features
 
