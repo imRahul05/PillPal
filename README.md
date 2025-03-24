@@ -15,12 +15,94 @@ Database: Firebase Realtime Database
 
 ## Directory Structure
 ```
-src/
-├── components/      # Reusable UI components
-├── contexts/        # React contexts for state management
-├── hooks/           # Custom React hooks
-├── lib/             # Utility functions and configuration
-├── pages/           # Main application pages
+PillPal/src/
+├── App.css
+├── App.jsx
+├── assets/
+│   ├── img.jpg
+│   ├── logo.jpeg
+│   ├── logo.png
+│   └── react.svg
+├── components/
+│   ├── .DS_Store
+│   ├── AIInsightsCard.jsx
+│   ├── CallToAction.jsx
+│   ├── Card.jsx
+│   ├── FeatureCard.jsx
+│   ├── FeatureSection.jsx
+│   ├── Footer.jsx
+│   ├── HeroSection.jsx
+│   ├── Loader.jsx
+│   ├── MedicationForm.jsx
+│   ├── Navbar.jsx
+│   ├── NotificationAlert.jsx
+│   ├── NotificationsDropdown.jsx
+│   ├── ProfileForm.jsx
+│   ├── ProtectedRoute.jsx
+│   ├── ShimmerLoader.jsx
+│   ├── TopButton.css
+│   ├── TopButton.jsx
+│   ├── dashboard/
+│   │   ├── DraggableMedicationList.jsx
+│   │   ├── MainContent.jsx
+│   │   ├── Navigations.jsx
+│   │   ├── QuickStats.jsx
+│   │   ├── Renewals.jsx
+│   │   └── SideBar.jsx
+│   └── ui/
+│       ├── .DS_Store
+│       ├── DatePicker.jsx
+│       ├── alert-dialog.jsx
+│       ├── avatar.jsx
+│       ├── button.jsx
+│       ├── calendar.jsx
+│       ├── card.jsx
+│       ├── dialog.jsx
+│       ├── dropdown-menu.jsx
+│       ├── form.jsx
+│       ├── hover-card.jsx
+│       ├── input.jsx
+│       ├── label.jsx
+│       ├── popover.jsx
+│       ├── select.jsx
+│       ├── separator.jsx
+│       ├── sheet.jsx
+│       ├── sidebar.jsx
+│       ├── skeleton.jsx
+│       ├── sonner.jsx
+│       ├── tabs.jsx
+│       ├── textarea.jsx
+│       ├── toast.jsx
+│       ├── toaster.jsx
+│       ├── tooltip.jsx
+│       └── use-toast.js
+├── contexts/
+│   ├── AuthContext.jsx
+│   └── ThemeContext.jsx
+├── hooks/
+│   ├── use-mobile.js
+│   ├── use-toast.js
+│   ├── useMedicationNotifications.jsx
+│   ├── useMedications.js
+│   └── useUserProfile.js
+├── index.css
+├── lib/
+│   ├── firebase.js
+│   ├── gemini.js
+│   └── utils.js
+├── main.jsx
+└── pages/
+    ├── AIAssistant.jsx
+    ├── Dashboard.jsx
+    ├── ForgotPassword.jsx
+    ├── Index.jsx
+    ├── Login.jsx
+    ├── Medications.jsx
+    ├── NotFound.jsx
+    ├── Profile.jsx
+    ├── Reports.jsx
+    └── Signup.jsx
+       
 ```
 
 ## Video Walkthrough of the project
