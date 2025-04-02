@@ -1,15 +1,40 @@
-
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import { useToast } from "@/components/ui/use-toast";
 
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
 
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const API_URL = import.meta.env.VITE_API_URL;
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-pro-exp-03-25",
+});
 
+const generationConfig = {
+  temperature: 0.4,
+  topP: 0.95,
+  topK: 32,
+  maxOutputTokens: 800,
+};
 
-export async function queryGemini(
-  prompt,
-  medications
-){
+const safetySettings = [
+  {
+    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+    threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+  },
+];
+
+export async function queryGemini(prompt, medications) {
   try {
     let content = prompt;
     
@@ -22,60 +47,16 @@ My question is: ${prompt}
       `;
     }
 
-    const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: content,
-              },
-            ],
-          },
-        ],
-        generationConfig: {
-          temperature: 0.4,
-          topK: 32,
-          topP: 0.95,
-          maxOutputTokens: 800,
-        },
-        safetySettings: [
-          {
-            category: "HARM_CATEGORY_HARASSMENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE",
-          },
-          {
-            category: "HARM_CATEGORY_HATE_SPEECH",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE",
-          },
-          {
-            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE",
-          },
-          {
-            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE",
-          },
-        ],
-      }),
+    const chatSession = model.startChat({
+      generationConfig,
+      safetySettings,
+      history: [],
     });
 
-    const data = await response.json();
-    
-    if (data.error) {
-      console.error("Gemini API error:", data.error);
-      return {
-        text: "",
-        error: data.error.message || "Failed to get response from AI"
-      };
-    }
-
-    const text = data.candidates[0].content.parts[0].text;
+    const result = await chatSession.sendMessage(content);
+    const text = result.response.text();
     return { text };
+
   } catch (error) {
     console.error("Error querying Gemini:", error);
     return { 
@@ -85,11 +66,7 @@ My question is: ${prompt}
   }
 }
 
-export async function generateAdherenceInsights(
-  medications,
-  takenCount,
-  missedCount
-) {
+export async function generateAdherenceInsights(medications, takenCount, missedCount) {
   const adherenceRate = medications.length > 0 
     ? Math.round((takenCount / (takenCount + missedCount)) * 100) || 0
     : 0;
@@ -110,9 +87,7 @@ Keep your response under 150 words and focus on practical advice.
   return queryGemini(prompt);
 }
 
-export async function generateInteractionWarnings(
-  medications
-) {
+export async function generateInteractionWarnings(medications) {
   if (medications.length < 2) {
     return { text: "No potential interactions to analyze with only one medication." };
   }
@@ -129,9 +104,7 @@ If there are no significant known interactions, please state that briefly.
   return queryGemini(prompt);
 }
 
-export async function generateDosageOptimizations(
-  medications
-) {
+export async function generateDosageOptimizations(medications) {
   const prompt = `
 I'm taking the following medications with these schedules:
 ${medications.map(med => `- ${med.name} (${med.dosage}) for ${med.category}, currently taken ${med.schedule}${med.time ? ` at ${med.time}` : ''}`).join('\n')}
