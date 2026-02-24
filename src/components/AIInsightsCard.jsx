@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { BrainCircuit, RefreshCw } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +6,24 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useMedications } from '@/hooks/useMedications';
 import { generateAdherenceInsights } from '@/lib/gemini';
 import { useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+
+const MarkdownComponents = {
+  p: ({ node, ...props }) => <p className="mb-2 last:mb-0 leading-relaxed" {...props} />,
+  ul: ({ node, ...props }) => <ul className="list-disc ml-5 mb-2 space-y-1" {...props} />,
+  ol: ({ node, ...props }) => <ol className="list-decimal ml-5 mb-2 space-y-1" {...props} />,
+  li: ({ node, ...props }) => <li className="leading-relaxed pl-1" {...props} />,
+  h1: ({ node, ...props }) => <h1 className="text-base font-bold mb-2 mt-3 text-foreground" {...props} />,
+  h2: ({ node, ...props }) => <h2 className="text-[15px] font-semibold mb-2 mt-3 text-foreground" {...props} />,
+  h3: ({ node, ...props }) => <h3 className="text-sm font-medium mb-1 mt-2 text-foreground" {...props} />,
+  a: ({ node, ...props }) => <a className="text-primary hover:underline font-medium" {...props} />,
+  strong: ({ node, ...props }) => <strong className="font-semibold text-foreground dark:text-gray-100" {...props} />,
+  code: ({ node, inline, ...props }) => 
+    inline 
+      ? <code className="bg-black/5 dark:bg-white/10 px-1 py-0.5 rounded text-xs font-mono text-primary" {...props} />
+      : <div className="bg-black/5 dark:bg-white/5 p-2 mb-2 rounded-md overflow-x-auto"><code className="text-xs font-mono" {...props} /></div>,
+  blockquote: ({ node, ...props }) => <blockquote className="border-l-3 border-primary/40 pl-3 italic text-muted-foreground my-2" {...props} />
+};
 
 const AIInsightsCard = () => {
   const [insights, setInsights] = useState('');
@@ -64,45 +81,55 @@ const AIInsightsCard = () => {
   };
 
   return (
-    <Card className="border-gray-200 dark:border-gray-800 shadow-glass-sm">
-      <CardHeader className="pb-2">
+    <Card className="border-border shadow-sm overflow-hidden flex flex-col h-full hover:shadow-md transition-shadow duration-300">
+      <CardHeader className="pb-3 bg-muted/30 border-b flex-shrink-0">
         <div className="flex flex-row justify-between items-center">
           <div className="flex items-center">
-            <BrainCircuit className="mr-2 h-5 w-5 text-primary" />
-            <CardTitle>AI Medication Insights</CardTitle>
+            <div className="bg-primary/10 p-2 rounded-lg mr-3">
+              <BrainCircuit className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+            </div>
+            <div>
+              <CardTitle className="text-base md:text-lg">AI Medication Insights</CardTitle>
+            </div>
           </div>
           <Button 
             variant="ghost" 
-            size="sm" 
-            className="h-8 w-8 p-0" 
+            size="icon" 
+            className="h-8 w-8 rounded-full hover:bg-muted-foreground/10" 
             onClick={loadInsights}
             disabled={loading}
+            title="Refresh Insights"
           >
-            <RefreshCw className="h-4 w-4" />
+            <RefreshCw className={cn("h-4 w-4", loading && "animate-spin text-muted-foreground")} />
           </Button>
         </div>
-        <CardDescription>
+        <CardDescription className="mt-2 text-xs md:text-sm">
           Personalized recommendations based on your medication patterns
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 flex flex-col p-4 md:p-5">
         {loading ? (
-          <div className="space-y-2">
+          <div className="space-y-3 flex-1">
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-4 w-11/12" />
+            <Skeleton className="h-4 w-4/5" />
+            <Skeleton className="h-4 w-[60%] mt-2" />
           </div>
         ) : (
-          <div className="space-y-4">
-            <div className="text-sm whitespace-pre-wrap">{insights}</div>
+          <div className="flex-1 flex flex-col items-start w-full">
+            <div className="text-sm md:text-[15px] mb-6 flex-1 w-full text-foreground/90 overflow-hidden break-words">
+              <ReactMarkdown components={MarkdownComponents}>
+                {insights}
+              </ReactMarkdown>
+            </div>
+            
             <Button 
-              variant="outline" 
               size="sm" 
-              className="w-full"
+              className="w-full mt-auto rounded-full gap-2 shadow-sm"
               onClick={() => navigate('/ai-assistant')}
             >
-              <BrainCircuit className="mr-2 h-4 w-4" />
+              <BrainCircuit className="h-4 w-4" />
               Open AI Assistant
             </Button>
           </div>
